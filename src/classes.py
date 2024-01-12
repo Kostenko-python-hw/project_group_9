@@ -121,6 +121,27 @@ class Record:
         else:
             self.address = address
 
+    def edit_birthday(self, new_birthday):
+        self.birthday = Birthday(new_birthday)
+
+    def edit_email(self, new_email):
+        self.email = Email(new_email) 
+
+    def edit_address(self, new_address):
+        self.address = Address(new_address) 
+    
+    def remove_email(self):
+        self.email = None
+        return "Email removed successfully"
+ 
+    def remove_birthday(self):
+        self.birthday = None
+        return "Birthday removed successfully"
+ 
+    def remove_address(self):
+        self.address = None
+        return "Address removed successfully"
+
     def add_phone(self, phone):
         try:
             phone_obj = Phone(phone)
@@ -273,8 +294,13 @@ new_book = AddressBook()
 
 john = Record("John", "20-05-2000", "contact_email123@gmail.com", "Street 45")
 john.add_phone("1234567890")
+
 new_book.add_record(john)
 print(john) 
+john.edit_birthday('19-03-2000')
+john.edit_address('Street 37')
+print(new_book.find("John"))
+john.remove_address()
 print(new_book.find("John"))
 # # Завантаження адресної книги з диску
 # new_book.load_from_file('address_book.pkl')
