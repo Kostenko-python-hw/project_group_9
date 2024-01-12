@@ -1,28 +1,9 @@
-from note_classes import Tag, Title, Description, Note, Notes
-from constants import bcolors
-
-shutdown_commands = ('good bye', 'close', 'exit')
-
-
-def cmd_parser(command):
-    if command in command_list:
-        command_list[command]()
-    else:
-        print('Command not found')
-
-
-# MAIN HANDLER
-def global_handler():
-    while True:
-        input_date = input('Enter the command:').strip().lower()
-
-        if input_date in shutdown_commands:
-            print("Good bye!")
-            break
-        elif not input_date:
-            print('Blank line is not a command.')
-        else:
-            cmd_parser(input_date)
+from src.constants import bcolors
+from src.notes.note_book import NoteBook
+from src.notes.note import Note
+from src.notes.title import Title
+from src.notes.description import Description
+from src.notes.tag import Tag
 
 
 # ADD NOTE
@@ -61,7 +42,7 @@ def add_note_handler():
 
             new_note.add_tag(list(tag_dict.values()))
             # add new note to notes list
-            notes_database = Notes()
+            notes_database = NoteBook()
             try:
                 notes_database.add(new_note)
                 print(f"{bcolors.OKGREEN}The note has been successfully added{bcolors.ENDC}")
@@ -72,7 +53,7 @@ def add_note_handler():
 
 # SHOW ALL NOTES
 def show_all_notes():
-    notes_database = Notes()
+    notes_database = NoteBook()
     if len(notes_database) == 0:
         print('You don\'t have any notes yet.')
     else:
@@ -83,17 +64,16 @@ def show_all_notes():
 
 # SEARCH NOTE
 def search_note():
-    print("Choose an option:")
-    print("1. Search in tags")
-    print("2. Search in content")
-    print("3. Exit")
-
     while True:
+        print("Choose an option:")
+        print("1. Search in tags")
+        print("2. Search in content")
+        print("3. Exit")
         choice = input("Enter the number of your choice: ")
 
         if choice == "1":
             search = input("Search: ")
-            notes_database = Notes()
+            notes_database = NoteBook()
             result = notes_database.search(search.lower().strip(), 'tag')
             if result:
                 print(f"{bcolors.OKGREEN}Result{bcolors.ENDC}")
@@ -104,7 +84,7 @@ def search_note():
                 print('No results found for the query.')
         elif choice == "2":
             search = input("Search: ")
-            notes_database = Notes()
+            notes_database = NoteBook()
             result = notes_database.search(search.lower().strip(), 'content')
             if result:
                 print(f"{bcolors.OKGREEN}Result{bcolors.ENDC}")
@@ -133,7 +113,7 @@ def delete_note():
             print('Blank line is not a id.')
         else:
             try:
-                notes_database = Notes()
+                notes_database = NoteBook()
                 is_deleted = notes_database.delete(int(entered_id))
                 if is_deleted:
                     print(f"{bcolors.OKGREEN}The note was successfully deleted{bcolors.ENDC}")
@@ -156,7 +136,7 @@ def edit_note():
         elif not entered_id:
             print('Blank line is not a id.')
         else:
-            notes_database = Notes()
+            notes_database = NoteBook()
             try:
                 current_note = notes_database.get_note_by_id(int(entered_id))
                 if not current_note:
@@ -172,18 +152,18 @@ def edit_note():
 
                     if choice == "1":
                         new_title = input("Enter a new title: ")
-                        notes_database.edit(int(id), new_title, 'title')
+                        notes_database.edit(int(entered_id), new_title, 'title')
                         print(f"{bcolors.OKGREEN}The title was successfully edited{bcolors.ENDC}")
                         break
                     elif choice == "2":
                         new_description = input("Enter a new description: ")
-                        notes_database.edit(int(id), new_description, 'description')
+                        notes_database.edit(int(entered_id), new_description, 'description')
                         print(f"{bcolors.OKGREEN}The description was successfully edited{bcolors.ENDC}")
                         break
                     elif choice == "3":
                         print(f"{bcolors.WARNING}Multiple tags can be separated with a comma{bcolors.ENDC}")
                         new_tags = input("Enter new tags: ")
-                        notes_database.edit(int(id), new_tags, 'tags')
+                        notes_database.edit(int(entered_id), new_tags, 'tags')
                         print(f"{bcolors.OKGREEN}The tags was successfully edited{bcolors.ENDC}")
                         break
                     elif choice == '4':
@@ -192,21 +172,3 @@ def edit_note():
                         print("Invalid choice. Please enter a valid number.")
             except ValueError:
                 print('The id must be a number')
-
-
-# LIST OF COMMANDS
-command_list = {
-    'add_note': add_note_handler,
-    'show_all_notes': show_all_notes,
-    'search_note': search_note,
-    'delete_note': delete_note,
-    'edit_note': edit_note,
-}
-
-
-def main():
-    global_handler()
-
-
-if __name__ == '__main__':
-    main()

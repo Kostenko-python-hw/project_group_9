@@ -1,4 +1,4 @@
-NOTES_FILE_NAME = 'notes_data.bin'
+NOTES_FILE_NAME = '../notes_data.bin'
 
 class bcolors:
     OKBLUE = '\033[94m'
