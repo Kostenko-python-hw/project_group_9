@@ -89,7 +89,7 @@ class Email(Field):
         return self.value
 
 class Address(Field):
-    def __init__(self, value):
+    def __init__(self, value): 
         self.__value = None
         self.value = value
 
@@ -225,16 +225,32 @@ class AddressBook(UserDict):
             # Якщо файл не існує або порожній, залишаємо адресну книгу пустою
             self.data = {}
 
-    def search_contacts(self, query):
-        results = []
-        for record in self.data.values():
-            if query.lower() in record.name.value.lower():
-                results.append(record)
-            for phone_obj in record.phones:
-                if query in phone_obj.value:
-                    results.append(record)
-                    break  # Додавання запису лише один раз
-        return results
+    def search(self, search_str):
+        '''
+        method searches contacts which name or phones match with "search string"
+        '''
+        result = []
+        for abonent_name, abonent_obj in self.data.items():
+
+            if search_str.lower() in abonent_name.lower():
+                result.append(str(abonent_obj))
+                continue
+            
+            if abonent_obj.address and search_str.lower() in abonent_obj.address.value.lower():
+                result.append(str(abonent_obj))
+                continue
+
+            if abonent_obj.email and search_str.lower() in abonent_obj.email.value.lower():
+                result.append(str(abonent_obj))
+                continue
+
+            for phone in abonent_obj.phones:
+                if search_str in phone.value:
+                    result.append(str(abonent_obj))
+                    break
+
+        return result
+
     
     def contacts_birthdays(self, days):
         '''
