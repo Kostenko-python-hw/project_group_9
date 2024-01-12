@@ -182,6 +182,8 @@ class Record:
 
             result = days_b4_birthday.days
 
+            
+
         else:
             print('The birthday was not stated')
 
