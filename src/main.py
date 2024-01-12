@@ -1,4 +1,5 @@
 from notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
+from sort_folder import sorter_interaction
 
 shutdown_commands = ('good bye', 'close', 'exit')
 
@@ -8,6 +9,7 @@ command_list = {
     'search_note': search_note,
     'delete_note': delete_note,
     'edit_note': edit_note,
+    'sort_folder': sorter_interaction,
 }
 
 
@@ -20,7 +22,7 @@ def cmd_parser(command):
 
 def global_handler():
     while True:
-        input_date = input('Enter the command:').strip().lower()
+        input_date = input('Enter the command: ').strip().lower()
 
         if input_date in shutdown_commands:
             print("Good bye!")
