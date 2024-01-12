@@ -11,7 +11,7 @@ def cmd_parser(command):
         print('Command not found')
 
 
-######## MAIN _NOTE ########
+# MAIN HANDLER
 def global_handler():
     while True:
         input_date = input('Enter the command:').strip().lower()
@@ -24,7 +24,8 @@ def global_handler():
         else:
             cmd_parser(input_date)
 
-######## ADD _NOTE_ ########
+
+# ADD NOTE
 def add_note_handler():
     new_note = Note()
     print(f"{bcolors.OKBLUE}Enter q to exit{bcolors.ENDC}")
@@ -48,18 +49,18 @@ def add_note_handler():
             tags = input('Enter tags:').strip()
             if tags == 'q':
                 break
-            splitted_tags = tags.split(',')
-            # cleaned_tags = list(filter(lambda el: el.strip(), splitted_tags))
+            split_tags = tags.split(',')
+            # cleaned_tags = list(filter(lambda el: el.strip(), split_tags))
             # list_of_tags = list(map(lambda el: Tag(el.strip().lower()), cleaned_tags))
             tag_dict = {}
-            for tag_name in splitted_tags:
+            for tag_name in split_tags:
                 tag_name = tag_name.strip().lower()
                 if tag_name:
                     tag_instance = Tag(tag_name)
                     tag_dict[tag_name] = tag_instance
 
             new_note.add_tag(list(tag_dict.values()))
-            #add new note to notes list
+            # add new note to notes list
             notes_database = Notes()
             try:
                 notes_database.add(new_note)
@@ -69,16 +70,18 @@ def add_note_handler():
             break
 
 
-######## SHOW ALL NOTES ########
+# SHOW ALL NOTES
 def show_all_notes():
     notes_database = Notes()
     if len(notes_database) == 0:
         print('You don\'t have any notes yet.')
     else:
         for key, note in notes_database.items():
-            print(f'{key} {note}') #добавить вывод в виде таблицы
+            # add table view
+            print(f'{key} {note}')
 
-######## SEARCH _NOTE ########
+
+# SEARCH NOTE
 def search_note():
     print("Choose an option:")
     print("1. Search in tags")
@@ -94,7 +97,8 @@ def search_note():
             result = notes_database.search(search.lower().strip(), 'tag')
             if result:
                 print(f"{bcolors.OKGREEN}Result{bcolors.ENDC}")
-                print(result) #добавить вывод в виде таблицы и также выводить id
+                # add table view
+                print(result)
                 break
             else:
                 print('No results found for the query.')
@@ -104,7 +108,8 @@ def search_note():
             result = notes_database.search(search.lower().strip(), 'content')
             if result:
                 print(f"{bcolors.OKGREEN}Result{bcolors.ENDC}")
-                print(result) #добавить вывод в виде таблицы и также выводить id
+                # add table view
+                print(result)
                 break
             else:
                 print('No results found for the query.')
@@ -113,23 +118,24 @@ def search_note():
         else:
             print("Invalid choice. Please enter a valid number.")
 
-######## DELETE _NOTE ########
+
+# DELETE _NOTE
 def delete_note():
     print(f"{bcolors.WARNING}If you don't know the id, you can use search_note to search for the note, or show_all_notes to display all notes{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Enter q to exit{bcolors.ENDC}")
 
     while True:
-        id = input("Enter the id of the note you want to delete: ")
+        entered_id = input("Enter the id of the note you want to delete: ")
 
-        if id == "q":
+        if entered_id == "q":
             break
-        elif not id:
+        elif not entered_id:
             print('Blank line is not a id.')
         else:
             try:
                 notes_database = Notes()
-                isDeleted = notes_database.delete(int(id))
-                if isDeleted:
+                is_deleted = notes_database.delete(int(entered_id))
+                if is_deleted:
                     print(f"{bcolors.OKGREEN}The note was successfully deleted{bcolors.ENDC}")
                     break
                 else:
@@ -138,22 +144,21 @@ def delete_note():
                 print('The id must be a number')
    
 
-######## EDIT _NOTE ########
+# EDIT _NOTE
 def edit_note():
     print(f"{bcolors.WARNING}If you don't know the id, you can use search_note to search for the note, or show_all_notes to display all notes{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Enter q to exit{bcolors.ENDC}")
     while True:
-        id = input("Enter the id of the note you want to edit: ")
+        entered_id = input("Enter the id of the note you want to edit: ")
 
-        if id == "q":
+        if entered_id == "q":
             break
-        elif not id:
+        elif not entered_id:
             print('Blank line is not a id.')
         else:
             notes_database = Notes()
-            current_note = False
             try:
-                current_note = notes_database.get_note_by_id(int(id))
+                current_note = notes_database.get_note_by_id(int(entered_id))
                 if not current_note:
                     print('Id not found')
                 else:
@@ -188,9 +193,8 @@ def edit_note():
             except ValueError:
                 print('The id must be a number')
 
-           
-     
-######## SLIST OF COMMANDS ########
+
+# LIST OF COMMANDS
 command_list = {
     'add_note': add_note_handler,
     'show_all_notes': show_all_notes,
@@ -198,6 +202,7 @@ command_list = {
     'delete_note': delete_note,
     'edit_note': edit_note,
 }
+
 
 def main():
     global_handler()

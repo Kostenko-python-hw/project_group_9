@@ -2,7 +2,8 @@ import pickle
 from collections import UserDict
 from constants import NOTES_FILE_NAME
 
-############ FIELD ############
+
+# FIELD
 class Field:
     def __init__(self, value):
         self.__value = None
@@ -24,8 +25,9 @@ class Field:
 
     def __str__(self):
         return str(self.value)
-    
-############ TITLE ############
+
+
+# TITLE
 class Title(Field):
     def validate(self, value):
         return value
@@ -35,8 +37,9 @@ class Title(Field):
 
     def __str__(self):
         return str(self.value)
-    
-############ DESCRIPTION ############
+
+
+# DESCRIPTION
 class Description(Field):
     def validate(self, value):
         return value
@@ -46,16 +49,18 @@ class Description(Field):
 
     def __str__(self):
         return str(self.value)
-    
-############ TAG ############
+
+
+# TAG
 class Tag(Field):
     def validate(self, value):
         return value
 
     def check_availability(self, value: str):
         return value in self.value
-    
-############ _NOTE_ ############
+
+
+# NOTE
 class Note:
     def __init__(self):
         self.__title = None
@@ -76,7 +81,6 @@ class Note:
     @property
     def tags(self):
         return self.__tags
-    
 
     @title.setter
     def title(self, value):
@@ -114,17 +118,17 @@ class Note:
         return f"Title: {self.title}, description: {self.description}, tags: {', '.join(p.value for p in self.tags)}"
 
 
-############ NOTES ############
+# NOTES
 class Notes(UserDict):
     def __init__(self):
+        super().__init__()
         try:
             file = self.restore_from_file()
             self.data = file["data"]
             self.notes_counter = file.get("notes_counter", 0)
-        except:
+        except FileNotFoundError:
             self.data = {}
             self.notes_counter = 0
-
 
     @property
     def notes_counter(self):
@@ -139,7 +143,6 @@ class Notes(UserDict):
         self.notes_counter += 1
         self.save_to_file()
 
-
     def search(self, value: str, option):
         result = set()
         for el in self.data.values():
@@ -153,8 +156,7 @@ class Notes(UserDict):
                 result.add(str(record))
             if len(result) > 0:
                 return '\n'.join([str(record) for record in result]) 
-    
-    
+
     def delete(self, id):
         if id in self.data:
             del self.data[id]
@@ -166,7 +168,6 @@ class Notes(UserDict):
             return self.data[id]
         else:
             return False
-        
 
     def edit(self, id, value, option):
         if option == 'title':
@@ -178,8 +179,7 @@ class Notes(UserDict):
         
         self.save_to_file()
 
-
-    ######## 
+    #
     def restore_from_file(self):
         try:
             with open(NOTES_FILE_NAME, "rb") as fh:
@@ -188,8 +188,7 @@ class Notes(UserDict):
         except FileNotFoundError:
             return {}
     
-    # @classmethod
     def save_to_file(self):
         with open(NOTES_FILE_NAME, "wb") as fh:
             pickle.dump({"data": self.data, "notes_counter": self.notes_counter}, fh)
-    ######## 
+    #
