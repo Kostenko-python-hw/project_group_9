@@ -151,8 +151,8 @@ class Notes(UserDict):
 
             if record:
                 result.add(str(record))
-        
-        return '\n'.join([str(record) for record in result]) if len(result) > 0 else 'No results found for the query.'
+            if len(result) > 0:
+                return '\n'.join([str(record) for record in result]) 
     
     
     def delete(self, id):
