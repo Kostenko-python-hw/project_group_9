@@ -77,6 +77,9 @@ class Birthday(Field):
 
 
 
+
+
+
 class Email(Field):
     def is_valid(self, new_value):
         email_pattern = r"[A-Za-z]+[A-Za-z0-9._]+[@]\w{2,}[.]\w{2,3}"
@@ -86,7 +89,7 @@ class Email(Field):
         return self.value
 
 class Address(Field):
-    def __init__(self, value):
+    def __init__(self, value): 
         self.__value = None
         self.value = value
 
@@ -148,6 +151,43 @@ class Record:
     
     def get_phones(self):
         return [str(phone.value) for phone in self.phones]
+    
+    def days_to_birthday(self):
+        '''
+        This method counts days till next birthday of Record object
+        '''
+        result = None
+        if self.birthday:
+            today = datetime.now()
+            this_year = today.year
+            days_b4_birthday = 0
+
+            birthday_date_obj = datetime.strptime(self.birthday.value, '%d-%m-%Y')
+
+            this_year_birthday_obj = datetime(
+                year = this_year,
+                month = birthday_date_obj.month,
+                day = birthday_date_obj.day
+                )
+            next_year_birthday_obj = datetime(
+                year = this_year + 1,
+                month = birthday_date_obj.month,
+                day = birthday_date_obj.day
+                )
+
+            if this_year_birthday_obj < today:
+                days_b4_birthday = next_year_birthday_obj - today
+            else:
+                days_b4_birthday = this_year_birthday_obj - today
+
+            result = days_b4_birthday.days
+
+            
+
+        else:
+            print('The birthday was not stated')
+
+        return result
 
     def __str__(self):
         phones_str = "; ".join(self.get_phones())
@@ -187,16 +227,44 @@ class AddressBook(UserDict):
             # Якщо файл не існує або порожній, залишаємо адресну книгу пустою
             self.data = {}
 
-    def search_contacts(self, query):
-        results = []
+    def search(self, search_str):
+        '''
+        method searches contacts which name or phones match with "search string"
+        '''
+        result = []
+        for abonent_name, abonent_obj in self.data.items():
+
+            if search_str.lower() in abonent_name.lower():
+                result.append(str(abonent_obj))
+                continue
+            
+            if abonent_obj.address and search_str.lower() in abonent_obj.address.value.lower():
+                result.append(str(abonent_obj))
+                continue
+
+            if abonent_obj.email and search_str.lower() in abonent_obj.email.value.lower():
+                result.append(str(abonent_obj))
+                continue
+
+            for phone in abonent_obj.phones:
+                if search_str in phone.value:
+                    result.append(str(abonent_obj))
+                    break
+
+        return result
+
+    
+    def contacts_birthdays(self, days):
+        '''
+        This method returns the contacts whose birthdays will come in next number of "days"
+        '''
+        result_contacts = []
         for record in self.data.values():
-            if query.lower() in record.name.value.lower():
-                results.append(record)
-            for phone_obj in record.phones:
-                if query in phone_obj.value:
-                    results.append(record)
-                    break  # Додавання запису лише один раз
-        return results
+            if record.birthday and record.days_to_birthday() < days:
+                result_contacts.append(str(record))
+
+        return result_contacts
+        
         
 
 # #Тести
