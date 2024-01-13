@@ -1,4 +1,4 @@
-from notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
+from src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
 
 shutdown_commands = ('good bye', 'close', 'exit')
 
