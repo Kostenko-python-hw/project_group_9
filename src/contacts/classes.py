@@ -228,12 +228,25 @@ class AddressBook(UserDict):
             output.append(str(el))
         return output
 
+    def find_inf(self, inf: str):
+        output = []
+        if inf.isalpha():
+            for el in self.data.values():
+                if inf in el.name.value:
+                    output.append(str(el))
+        elif inf.isdigit():
+            for el in self.data.values():
+                for i in el.phones:
+                    if inf in i.value:
+                        output.append(str(el))
+                        break
+        return output
 
     def find(self, name):
         if name in self.data:
             print(str(self.data[name] ))
         else:
-            print('There isn"t contact with such name')
+            print(f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
     
     
     def delete(self, name):
@@ -241,7 +254,7 @@ class AddressBook(UserDict):
             del self.data[name]
             print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
             return 'done'
-        print(f"Record {name} not found")
+        print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
 
     def save_to_file(self, filename):
         with open(filename, 'wb') as file:

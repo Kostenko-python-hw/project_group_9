@@ -53,7 +53,7 @@ def create(contact_book: AddressBook):
     new_contact = Record(name, birthday, email, address)
     new_contact.add_phone(phone)
     contact_book.add_record(new_contact)
-    print(f'Contact {bcolors.OKGREEN}{name}{bcolors.ENDC} has been created successfully')
+    print(f'Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been created successfully')
     close(contact_book)
 
 
@@ -114,6 +114,9 @@ def change(contact_book: AddressBook):
 def show(contact_book: AddressBook):
     res = contact_book.list_contacts()
     res2 = (' ;\n').join(res)
+    if res == []:
+        print('There are no contacts in Contact book')
+        return None
     print(res2)
 
 
@@ -283,19 +286,24 @@ def remove_contact(contact_book: AddressBook):
     close(contact_book)
 
 
-'''def birthdays(contact_book: AddressBook):
+def birthdays(contact_book: AddressBook):
     while True:
         quant = input('Enter quantity of days:   ')
         if quant.isdigit() and 0 < int(quant) < 365:
             break    
         else:
             print('Incorrect value')
-    print(contact_book.contacts_birthdays(quant) ) '''   
+    quant = int(quant)
+    print(contact_book.contacts_birthdays(quant) )  
 
 
 def search(contact_book: AddressBook):
     inf = input('Enter information about contact:   ') 
-    print(contact_book.search(inf))
+    res = contact_book.find_inf(inf)
+    res2 = (' ;\n').join(res)
+    if res == []:
+        print('There isn"t any contact with such information')
+    print(res2)
 
 
 

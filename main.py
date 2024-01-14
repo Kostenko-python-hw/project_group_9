@@ -1,7 +1,7 @@
 
 from src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
 from src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
-from src.contacts.work import start, close,  search
+from src.contacts.work import start, close,  search, birthdays
 
 
 shutdown_commands = ('good bye', 'close', 'exit')
@@ -28,8 +28,9 @@ command_list2 = {
     'remove address': remove_address,
     'find contact': find_contact,
     'remove contact': remove_contact,
-    'search inf': search
-
+    'search inf': search,
+    'current birthdays': birthdays
+     
 }
 
 def cmd_parser(command, contact_book):
