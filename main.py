@@ -7,11 +7,11 @@ from src.contacts.work import start, close,  search
 shutdown_commands = ('good bye', 'close', 'exit')
 
 command_list = {
-    'add_note': add_note_handler,
-    'show_all_notes': show_all_notes,
-    'search_note': search_note,
-    'delete_note': delete_note,
-    'edit_note': edit_note,
+    'add note': add_note_handler,
+    'show all notes': show_all_notes,
+    'search note': search_note,
+    'delete note': delete_note,
+    'edit note': edit_note,
 }
 
 command_list2 = {
@@ -31,6 +31,7 @@ command_list2 = {
     'search inf': search
 
 }
+
 
 def cmd_parser(command, contact_book):
     if command in command_list:
