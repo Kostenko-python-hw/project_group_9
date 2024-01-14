@@ -149,7 +149,6 @@ class Record:
         try:
             phone_obj = Phone(phone)
             self.phones.append(phone_obj)
-            print(f"Phone number {phone} has been added successfully")
         except ValueError as e:
             return f"Error: {e}"
 

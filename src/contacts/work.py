@@ -1,14 +1,16 @@
-from classes import Record, AddressBook, Field, Name, Phone, Email
+from src.constants import CONTACTS_FILE_NAME
+from src.contacts.classes import Record, AddressBook, Phone, Email
 from pathlib import Path
+from src.constants import bcolors
 
 
 def create(contact_book: AddressBook):
     while True:
-        name = input('Enter name   ')
+        name = input('Enter name: ')
         if name.isalpha():
             break
         else:
-            print('Incorrect value')
+            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
     while True:
         phone = input('Enter phone  ')
         try:
@@ -38,7 +40,6 @@ def create(contact_book: AddressBook):
     new_contact = Record(name, birthday, email, address)
     new_contact.add_phone(phone)
     contact_book.add_record(new_contact)
-    print(str(new_contact))
 
 
 def add(contact_book: AddressBook):
@@ -93,14 +94,14 @@ def show(contact_book: AddressBook):
 
 
 def start():
-    if Path('storage.bin').is_file():
-        return AddressBook.load_from_file('storage.bin')
+    if Path(CONTACTS_FILE_NAME).is_file():
+        return AddressBook.load_from_file(CONTACTS_FILE_NAME)
     else:
         return AddressBook()
 
 
 def close(contact_book: AddressBook):
-    contact_book.save_to_file('storage.bin')
+    contact_book.save_to_file(CONTACTS_FILE_NAME)
     
 
 def edit_email(contact_book: AddressBook):
