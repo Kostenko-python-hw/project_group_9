@@ -128,21 +128,36 @@ def edit_note():
                     choice = input("Enter the number of your choice: ")
 
                     if choice == "1":
-                        new_title = input("Enter a new title: ")
-                        notes_database.edit(int(entered_id), new_title, 'title')
-                        print(f"{bcolors.OKGREEN}The title was successfully edited{bcolors.ENDC}")
-                        break
+                        print(f"{bcolors.WARNING}Title must contain at most 50 characters.{bcolors.ENDC}")
+                        try:
+                            new_title = input("Enter a new title: ")
+                            notes_database.edit(int(entered_id), new_title, 'title')
+                            print(f"{bcolors.OKGREEN}The title was successfully edited{bcolors.ENDC}")
+                            break
+                        except ValueError as e:
+                            print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
                     elif choice == "2":
-                        new_description = input("Enter a new description: ")
-                        notes_database.edit(int(entered_id), new_description, 'description')
-                        print(f"{bcolors.OKGREEN}The description was successfully edited{bcolors.ENDC}")
-                        break
+                        print(f"{bcolors.WARNING}Description must contain at most 80 characters.{bcolors.ENDC}")
+                        try:
+                            new_description = input("Enter a new description: ")
+                            notes_database.edit(int(entered_id), new_description, 'description')
+                            print(f"{bcolors.OKGREEN}The description was successfully edited{bcolors.ENDC}")
+                            break
+                        except ValueError as e:
+                            print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
                     elif choice == "3":
-                        print(f"{bcolors.WARNING}Multiple tags can be separated with a comma{bcolors.ENDC}")
-                        new_tags = input("Enter new tags: ")
-                        notes_database.edit(int(entered_id), new_tags, 'tags')
-                        print(f"{bcolors.OKGREEN}The tags was successfully edited{bcolors.ENDC}")
-                        break
+                        print(f"{bcolors.WARNING}Tags must contain at most 40 characters.{bcolors.ENDC}")
+                        print(f"{bcolors.OKBLUE}Multiple tags can be separated with a comma{bcolors.ENDC}")
+                        try:
+                            new_tags = input("Enter new tags: ")
+                            if len(new_tags) <= 80:
+                                notes_database.edit(int(entered_id), new_tags, 'tags')
+                                print(f"{bcolors.OKGREEN}The tags was successfully edited{bcolors.ENDC}")
+                                break
+                            else:
+                                print(f"{bcolors.FAIL}Tags must contain at most 40 characters.{bcolors.ENDC}")
+                        except ValueError as e:
+                            print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
                     elif choice == '4':
                         break 
                     else:
