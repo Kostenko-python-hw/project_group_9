@@ -2,6 +2,7 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 import re
+from src.constants import bcolors
 
 class Field:
     def __init__(self, value):
@@ -127,7 +128,7 @@ class Record:
 
     def edit_email(self, new_email):
         self.email = Email(new_email) 
-        print("Address has been edited successfully")
+        print("Email has been edited successfully")
 
     def edit_address(self, new_address):
         self.address = Address(new_address)
@@ -156,7 +157,7 @@ class Record:
         for phone_obj in self.phones:
             if phone_obj.value == phone:
                 self.phones.remove(phone_obj)
-                print( f"Phone number {phone} removed successfully")
+                
                 return 'done'
         print( f"Phone number {phone} not found")
 
@@ -164,8 +165,7 @@ class Record:
         for phone_obj in self.phones:
             if phone_obj.value == old_phone:
                 phone_obj.value = new_phone
-                print(f"Phone number {old_phone} edited successfully")
-        raise ValueError(f"Phone number {old_phone} not found")
+        
 
     def find_phone(self, phone):
         for phone_obj in self.phones:
@@ -215,7 +215,7 @@ class Record:
 
     def __str__(self):
         phones_str = "; ".join(self.get_phones())
-        return f"Contact name: {self.name}, phones: {phones_str}, birthday: {self.birthday}, email: {self.email}, address: {self.address}"
+        return f"Contact name: {bcolors.OKBLUE}{self.name}{bcolors.ENDC}, phones:{bcolors.OKGREEN} {phones_str}{bcolors.ENDC}, birthday: {bcolors.OKBLUE}{self.birthday}{bcolors.ENDC}, email: {bcolors.OKBLUE}{self.email}{bcolors.ENDC}, address: {bcolors.OKBLUE}{self.address}{bcolors.ENDC}"
 
 
 class AddressBook(UserDict):
@@ -239,7 +239,7 @@ class AddressBook(UserDict):
     def delete(self, name):
         if name in self.data:
             del self.data[name]
-            print(f"Record {name} has been deleted successfully")
+            print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
             return 'done'
         print(f"Record {name} not found")
 
