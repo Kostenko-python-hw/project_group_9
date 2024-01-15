@@ -50,6 +50,7 @@ def main():
     commands_completer = WordCompleter(notes_commands)
 
     while True:
+        # To work in console
         input_date = prompt('Enter the command: ',
                             completer=commands_completer,
                             mouse_support=True,
@@ -57,6 +58,8 @@ def main():
                             search_ignore_case=True,
                             enable_open_in_editor=True,
                             ).strip().lower()
+        # To work in IDE
+        # input_date = input('Enter the command: ').strip().lower()
 
         if input_date in SHUTDOWN_COMMANDS:
             print("Good bye!")
