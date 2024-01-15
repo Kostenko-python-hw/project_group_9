@@ -1,6 +1,7 @@
 NOTES_FILE_NAME = '../notes_data.bin'
 CONTACTS_FILE_NAME = '../storage.bin'
 
+SHUTDOWN_COMMANDS = ('good bye', 'close', 'exit')
 
 class bcolors:
     OKBLUE = '\033[94m'

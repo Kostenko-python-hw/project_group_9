@@ -4,12 +4,9 @@ from prompt_toolkit.completion import WordCompleter
 from helper_bot.src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
 from helper_bot.src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
 from helper_bot.src.contacts.work import start, close,  search
+from helper_bot.src.constants import SHUTDOWN_COMMANDS
 
-# @todo move this to config
-shutdown_commands = ('good bye', 'close', 'exit')
-
-# @todo make decorator, use it near function definitions, collect all commands to dict and export dict to use in main
-command_list = {
+general_commands_list = {
     'add note': add_note_handler,
     'show all notes': show_all_notes,
     'search note': search_note,
@@ -17,7 +14,7 @@ command_list = {
     'edit note': edit_note,
 }
 
-command_list2 = {
+address_book_commands_list = {
     'add phone': add,
     'create contact': create,
     'edit phone': change,
@@ -35,25 +32,25 @@ command_list2 = {
 
 }
 
-
 def cmd_parser(command, contact_book):
-    if command in command_list:
-        command_list[command]()
-    elif command in command_list2:
-        command_list2[command](contact_book)
+    if command in general_commands_list:
+        general_commands_list[command]()
+    elif command in address_book_commands_list:
+        address_book_commands_list[command](contact_book)
     else:
         print('Command not found')
 
 
 def main():
     contact_book = start()
-    commands_completer = WordCompleter(command_list2)
+    commands_completer = WordCompleter(
+        {**address_book_commands_list, **general_commands_list})
 
     while True:
         input_date = prompt('Enter the command: ',
                             completer=commands_completer).strip().lower()
 
-        if input_date in shutdown_commands:
+        if input_date in SHUTDOWN_COMMANDS:
             print("Good bye!")
             close(contact_book)
             break
