@@ -59,7 +59,16 @@ def valid_birthday():
 
 
 def create(contact_book: AddressBook):
-    name = valid_name()
+    while True:
+        name = valid_name()
+        i = True
+        for el in contact_book.keys():
+            if name.lower() == el.lower():
+                i = False
+                print(f' There is a contact with  name {name} in Contact book')
+                break 
+        if i == True:
+            break      
     phone = valid_phone()
     email = valid_email()
     address = input('Enter address:  ')
@@ -89,27 +98,36 @@ def add(contact_book: AddressBook):
 
 
 def change(contact_book: AddressBook):
-    print('Phone number must be in Contact book')
-    phone = valid_phone()
-    for phone_contact_book in contact_book.data.values():
-        for tel in phone_contact_book.phones:
-            if phone == tel.value:
-                while True:
-                    new_phone = input('Enter new phone number:  ')
-                    try:
-                        Phone(new_phone)
-                        break
-                    except:
-                        print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                        continue
-                phone_contact_book.edit_phone(phone, new_phone)
-                print(
-                    f"Phone number {bcolors.OKBLUE}{phone}{bcolors.ENDC} has been replaced by {bcolors.OKGREEN}{new_phone}{bcolors.ENDC}")
-                close(contact_book)
-                return 'changed'
+    name = valid_name()
+    for el in contact_book.data.values():
+        if name.lower() == el.name.value.lower():
+            print(f"{bcolors.OKBLUE}{str(el)}{bcolors.ENDC}")
+            while True:
+                phone = input('Enter contact phone number:   ')
+                try:
+                    Phone(phone)
+                    break
+                except:
+                    print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+            for tel in el.phones:
+                if phone == tel.value:
+                    while True:
+                        new_phone = input('Enter new phone number:  ')
+                        try:
+                            Phone(new_phone)
+                            break
+                        except:
+                            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+                            continue
+                    el.edit_phone(phone, new_phone)
+                    print(
+                        f"Phone number {bcolors.OKBLUE}{phone}{bcolors.ENDC} has been replaced by {bcolors.OKGREEN}{new_phone}{bcolors.ENDC}")
+                    close(contact_book)
+                    return 'changed'
+            print(f'Contact {name} has not phone {phone}') 
+            return None         
     print(
-        f'There is not {bcolors.FAIL}{phone}{bcolors.ENDC} phone number in the contact book ')
-
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 def show(contact_book: AddressBook):
     res = contact_book.list_contacts()
