@@ -1,4 +1,4 @@
-from src.notes.field import Field
+from helper_bot.src.notes.field import Field
 
 
 class Description(Field):

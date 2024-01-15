@@ -1,6 +1,8 @@
 NOTES_FILE_NAME = '../notes_data.bin'
 CONTACTS_FILE_NAME = '../storage.bin'
 
+SHUTDOWN_COMMANDS = ('good bye', 'close', 'exit')
+
 class bcolors:
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -9,5 +11,6 @@ class bcolors:
     ENDC = '\033[0m'
 
 
-note_header = "|{:^6}|{:^52}|{:^42}|{:^82}|".format('id', 'title', 'tags', 'description')
+note_header = "|{:^6}|{:^52}|{:^42}|{:^82}|".format(
+    'id', 'title', 'tags', 'description')
 underline = '_'*187

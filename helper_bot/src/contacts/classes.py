@@ -2,7 +2,8 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 import re
-from src.constants import bcolors
+from helper_bot.src.constants import bcolors
+
 
 class Field:
     def __init__(self, value):
@@ -22,17 +23,16 @@ class Field:
     def is_valid(self, value):
         return True
 
-    def __str__(self):  
+    def __str__(self):
         return str(self.value)
 
 
 class Name(Field):
     def is_valid(self, value):
-        if value.isalpha() :
-            return True  
+        if value.isalpha():
+            return True
         else:
             return False
-
 
 
 class Phone(Field):
@@ -42,7 +42,6 @@ class Phone(Field):
 
     def __str__(self):
         return self.value
-
 
 
 class Birthday(Field):
@@ -65,7 +64,6 @@ class Birthday(Field):
             except ValueError:
                 return False
 
-
     # def days_to_birthday(self):
     #     if self.__value:
     #         today = datetime.now().date()
@@ -77,10 +75,6 @@ class Birthday(Field):
     #     return None
 
 
-
-
-
-
 class Email(Field):
     def is_valid(self, new_value):
         email_pattern = r"[A-Za-z]+[A-Za-z0-9._]+[@]\w{2,}[.]\w{2,3}"
@@ -89,8 +83,9 @@ class Email(Field):
     def __str__(self):
         return self.value
 
+
 class Address(Field):
-    def __init__(self, value): 
+    def __init__(self, value):
         self.__value = None
         self.value = value
 
@@ -104,6 +99,7 @@ class Address(Field):
 
     def __str__(self):
         return self.value
+
 
 class Record:
     def __init__(self, name, birthday=None, email=None, address=None):
@@ -127,21 +123,21 @@ class Record:
         print("Birthday has been edited successfully")
 
     def edit_email(self, new_email):
-        self.email = Email(new_email) 
+        self.email = Email(new_email)
         print("Email has been edited successfully")
 
     def edit_address(self, new_address):
         self.address = Address(new_address)
-        print("Address has been edited successfully") 
-    
+        print("Address has been edited successfully")
+
     def remove_email(self):
         self.email = None
         print("Email has been removed successfully")
- 
+
     def remove_birthday(self):
         self.birthday = None
         print("Birthday has been removed successfully")
- 
+
     def remove_address(self):
         self.address = None
         print("Address has been removed successfully")
@@ -157,25 +153,24 @@ class Record:
         for phone_obj in self.phones:
             if phone_obj.value == phone:
                 self.phones.remove(phone_obj)
-                
+
                 return 'done'
-        print( f"Phone number {phone} not found")
+        print(f"Phone number {phone} not found")
 
     def edit_phone(self, old_phone, new_phone):
         for phone_obj in self.phones:
             if phone_obj.value == old_phone:
                 phone_obj.value = new_phone
-        
 
     def find_phone(self, phone):
         for phone_obj in self.phones:
             if phone_obj.value == phone:
                 return phone_obj
         return None
-    
+
     def get_phones(self):
         return [str(phone.value) for phone in self.phones]
-    
+
     def days_to_birthday(self):
         '''
         This method counts days till next birthday of Record object
@@ -186,18 +181,19 @@ class Record:
             this_year = today.year
             days_b4_birthday = 0
 
-            birthday_date_obj = datetime.strptime(self.birthday.value, '%d-%m-%Y')
+            birthday_date_obj = datetime.strptime(
+                self.birthday.value, '%d-%m-%Y')
 
             this_year_birthday_obj = datetime(
-                year = this_year,
-                month = birthday_date_obj.month,
-                day = birthday_date_obj.day
-                )
+                year=this_year,
+                month=birthday_date_obj.month,
+                day=birthday_date_obj.day
+            )
             next_year_birthday_obj = datetime(
-                year = this_year + 1,
-                month = birthday_date_obj.month,
-                day = birthday_date_obj.day
-                )
+                year=this_year + 1,
+                month=birthday_date_obj.month,
+                day=birthday_date_obj.day
+            )
 
             if this_year_birthday_obj < today:
                 days_b4_birthday = next_year_birthday_obj - today
@@ -205,8 +201,6 @@ class Record:
                 days_b4_birthday = this_year_birthday_obj - today
 
             result = days_b4_birthday.days
-
-            
 
         else:
             print('The birthday was not stated')
@@ -245,23 +239,25 @@ class AddressBook(UserDict):
     def find(self, name):
         name2 = name.title()
         if name in self.data:
-            print(str(self.data[name] ))
+            print(str(self.data[name]))
         elif name2 in self.data:
-            print(str(self.data[name2] ))     
+            print(str(self.data[name2]))
         else:
-            print(f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
-    
-    
+            print(
+                f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
+
     def delete(self, name):
         name2 = name.title()
         if name in self.data:
             del self.data[name]
-            print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
+            print(
+                f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
             return 'done'
         elif name2 in self.data:
             del self.data[name2]
-            print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
-            return 'done'  
+            print(
+                f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
+            return 'done'
         print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
 
     def save_to_file(self, filename):
@@ -283,7 +279,7 @@ class AddressBook(UserDict):
             if search_str.lower() in abonent_name.lower():
                 result.append(str(abonent_obj))
                 continue
-            
+
             if abonent_obj.address and search_str.lower() in abonent_obj.address.value.lower():
                 result.append(str(abonent_obj))
                 continue
@@ -299,7 +295,6 @@ class AddressBook(UserDict):
 
         return result
 
-    
     def contacts_birthdays(self, days):
         '''
         This method returns the contacts whose birthdays will come in next number of "days"
@@ -310,5 +305,3 @@ class AddressBook(UserDict):
                 result_contacts.append(str(record))
 
         return result_contacts
-        
-        

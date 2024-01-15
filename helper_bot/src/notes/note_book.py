@@ -1,7 +1,7 @@
 import pickle
 from collections import UserDict
-from src.notes.note import Note
-from src.constants import NOTES_FILE_NAME
+from helper_bot.src.notes.note import Note
+from helper_bot.src.constants import NOTES_FILE_NAME
 
 
 class NoteBook(UserDict):
@@ -75,4 +75,5 @@ class NoteBook(UserDict):
 
     def save_to_file(self):
         with open(NOTES_FILE_NAME, "wb") as fh:
-            pickle.dump({"data": self.data, "notes_counter": self.notes_counter}, fh)
+            pickle.dump(
+                {"data": self.data, "notes_counter": self.notes_counter}, fh)

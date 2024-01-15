@@ -1,12 +1,14 @@
-from src.constants import CONTACTS_FILE_NAME
-from src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
 from pathlib import Path
-from src.constants import bcolors
+
+from helper_bot.src.constants import CONTACTS_FILE_NAME
+from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
+from helper_bot.src.constants import bcolors
 
 
 def close(contact_book: AddressBook):
     contact_book.save_to_file(CONTACTS_FILE_NAME)
-    
+
+
 def valid_name():
     while True:
         name = input('Enter contact name: ')
@@ -15,9 +17,11 @@ def valid_name():
         else:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
 
+
 def valid_phone():
     while True:
-        print(f'Example phone number: {bcolors.OKGREEN}1234525680{bcolors.ENDC}')
+        print(
+            f'Example phone number: {bcolors.OKGREEN}1234525680{bcolors.ENDC}')
         phone = input('Enter phone number:   ')
         try:
             Phone(phone)
@@ -38,7 +42,7 @@ def valid_email():
             return email
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-           
+
 
 def valid_birthday():
     while True:
@@ -52,7 +56,7 @@ def valid_birthday():
             return birthday
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                                   
+
 
 def create(contact_book: AddressBook):
     name = valid_name()
@@ -65,7 +69,8 @@ def create(contact_book: AddressBook):
     new_contact = Record(name, birthday, email, address)
     new_contact.add_phone(phone)
     contact_book.add_record(new_contact)
-    print(f'Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been created successfully')
+    print(
+        f'Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been created successfully')
     close(contact_book)
 
 
@@ -75,10 +80,12 @@ def add(contact_book: AddressBook):
         if name.lower() == el.name.value.lower():
             phone = valid_phone()
             el.add_phone(phone)
-            print(f"Phone has been added to contact {bcolors.OKBLUE}{name}{bcolors.ENDC}")
+            print(
+                f"Phone has been added to contact {bcolors.OKBLUE}{name}{bcolors.ENDC}")
             close(contact_book)
             return 'added'
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )  
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def change(contact_book: AddressBook):
@@ -96,10 +103,12 @@ def change(contact_book: AddressBook):
                         print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
                         continue
                 phone_contact_book.edit_phone(phone, new_phone)
-                print(f"Phone number {bcolors.OKBLUE}{phone}{bcolors.ENDC} has been replaced by {bcolors.OKGREEN}{new_phone}{bcolors.ENDC}")
+                print(
+                    f"Phone number {bcolors.OKBLUE}{phone}{bcolors.ENDC} has been replaced by {bcolors.OKGREEN}{new_phone}{bcolors.ENDC}")
                 close(contact_book)
                 return 'changed'
-    print(f'There is not {bcolors.FAIL}{phone}{bcolors.ENDC} phone number in the contact book '  )     
+    print(
+        f'There is not {bcolors.FAIL}{phone}{bcolors.ENDC} phone number in the contact book ')
 
 
 def show(contact_book: AddressBook):
@@ -118,8 +127,6 @@ def start():
         return AddressBook()
 
 
-
-
 def edit_email(contact_book: AddressBook):
     name = valid_name()
     for el in contact_book.data.values():
@@ -127,8 +134,9 @@ def edit_email(contact_book: AddressBook):
             email = valid_email()
             el.edit_email(email)
             close(contact_book)
-            return  "Email edited successfully"   
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )    
+            return "Email edited successfully"
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def edit_birthday(contact_book: AddressBook):
@@ -139,7 +147,8 @@ def edit_birthday(contact_book: AddressBook):
             el.edit_birthday(birthday)
             close(contact_book)
             return 'done'
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )  
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def edit_address(contact_book: AddressBook):
@@ -149,8 +158,9 @@ def edit_address(contact_book: AddressBook):
             address = input('Enter address  ')
             el.edit_address(address)
             close(contact_book)
-            return  "Email edited successfully"   
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )  
+            return "Email edited successfully"
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def remove_phone(contact_book: AddressBook):
@@ -158,12 +168,14 @@ def remove_phone(contact_book: AddressBook):
     for el in contact_book.data.values():
         if name.lower() == el.name.value.lower():
             phone = valid_phone()
-            print( f"Phone number {bcolors.FAIL}{phone}{bcolors.ENDC} removed successfully")
-            el.remove_phone(phone) 
-            close(contact_book) 
-            return 'done'        
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )  
- 
+            print(
+                f"Phone number {bcolors.FAIL}{phone}{bcolors.ENDC} removed successfully")
+            el.remove_phone(phone)
+            close(contact_book)
+            return 'done'
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
+
 
 def remove_email(contact_book: AddressBook):
     name = valid_name()
@@ -171,8 +183,9 @@ def remove_email(contact_book: AddressBook):
         if name.lower() == el.name.value.lower():
             el.remove_email()
             close(contact_book)
-            return 'done'          
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )   
+            return 'done'
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def remove_address(contact_book: AddressBook):
@@ -181,28 +194,30 @@ def remove_address(contact_book: AddressBook):
         if name.lower() == el.name.value.lower():
             el.remove_address()
             close(contact_book)
-            return 'removed'         
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )   
+            return 'removed'
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def remove_birthday(contact_book: AddressBook):
     name = valid_name()
     for el in contact_book.data.values():
         if name.lower() == el.name.value.lower():
-            el.remove_birthday()   
+            el.remove_birthday()
             close(contact_book)
-            return 'done'     
-    print(f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ' )   
+            return 'done'
+    print(
+        f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
 
 def find_contact(contact_book: AddressBook):
     name = valid_name()
-    contact_book.find(name)   
+    contact_book.find(name)
 
 
 def remove_contact(contact_book: AddressBook):
     name = valid_name()
-    contact_book.delete(name) 
+    contact_book.delete(name)
     close(contact_book)
 
 
@@ -210,20 +225,17 @@ def birthdays(contact_book: AddressBook):
     while True:
         quant = input('Enter quantity of days:   ')
         if quant.isdigit() and 0 < int(quant) < 365:
-            break    
+            break
         else:
             print('Incorrect value')
     quant = int(quant)
-    print(contact_book.contacts_birthdays(quant) )  
+    print(contact_book.contacts_birthdays(quant))
 
 
 def search(contact_book: AddressBook):
-    inf = input('Enter information about contact:   ') 
+    inf = input('Enter information about contact:   ')
     res = contact_book.find_inf(inf)
     res2 = (' ;\n').join(res)
     if res == []:
         print('There isn"t any contact with such information')
     print(res2)
-
-
-

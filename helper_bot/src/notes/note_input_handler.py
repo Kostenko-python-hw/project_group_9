@@ -1,5 +1,5 @@
-from src.notes.tag import Tag
-from src.constants import bcolors
+from helper_bot.src.notes.tag import Tag
+from helper_bot.src.constants import bcolors
 
 
 class NoteInputHandler:
@@ -8,7 +8,8 @@ class NoteInputHandler:
         return input(prompt).strip()
 
     def get_title(self, new_note):
-        print(f"{bcolors.WARNING}Title must contain at most 50 characters.{bcolors.ENDC}")
+        print(
+            f"{bcolors.WARNING}Title must contain at most 50 characters.{bcolors.ENDC}")
 
         while True:
             title = self.get_user_input("Enter a title:")
@@ -21,7 +22,8 @@ class NoteInputHandler:
                 print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
 
     def get_description(self, new_note):
-        print(f"{bcolors.WARNING}Description must contain at most 80 characters.{bcolors.ENDC}")
+        print(
+            f"{bcolors.WARNING}Description must contain at most 80 characters.{bcolors.ENDC}")
         while True:
             description = self.get_user_input("Enter a description:")
             if description == 'q':
@@ -33,8 +35,10 @@ class NoteInputHandler:
                 print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
 
     def get_tags(self, new_note):
-        print(f"{bcolors.WARNING}Tags must contain at most 40 characters.{bcolors.ENDC}")
-        print(f"{bcolors.OKBLUE}Multiple tags can be separated with a comma{bcolors.ENDC}")
+        print(
+            f"{bcolors.WARNING}Tags must contain at most 40 characters.{bcolors.ENDC}")
+        print(
+            f"{bcolors.OKBLUE}Multiple tags can be separated with a comma{bcolors.ENDC}")
         while True:
             tags_input = self.get_user_input("Enter tags:")
             if len(tags_input) <= 80:
@@ -50,4 +54,5 @@ class NoteInputHandler:
                 new_note.add_tag(tag_dict.values())
                 return
             else:
-                print(f"{bcolors.FAIL}Tags must contain at most 40 characters.{bcolors.ENDC}")
+                print(
+                    f"{bcolors.FAIL}Tags must contain at most 40 characters.{bcolors.ENDC}")
