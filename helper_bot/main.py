@@ -1,6 +1,7 @@
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 
+from helper_bot.src.sorter.sort_folder import sorter_interaction
 from helper_bot.src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
 from helper_bot.src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
 from helper_bot.src.contacts.work import start, close,  search
@@ -12,7 +13,9 @@ general_commands_list = {
     'search note': search_note,
     'delete note': delete_note,
     'edit note': edit_note,
+    'sort_folder': sorter_interaction
 }
+
 
 address_book_commands_list = {
     'add phone': add,
