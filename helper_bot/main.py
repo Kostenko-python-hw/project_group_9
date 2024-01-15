@@ -46,12 +46,17 @@ def cmd_parser(command, contact_book):
 
 def main():
     contact_book = start()
-    commands_completer = WordCompleter(
-        {**address_book_commands_list, **general_commands_list})
+    notes_commands = list(address_book_commands_list.keys()) + list(general_commands_list.keys()) + list(SHUTDOWN_COMMANDS)
+    commands_completer = WordCompleter(notes_commands)
 
     while True:
         input_date = prompt('Enter the command: ',
-                            completer=commands_completer).strip().lower()
+                            completer=commands_completer,
+                            mouse_support=True,
+                            swap_light_and_dark_colors=True,
+                            search_ignore_case=True,
+                            enable_open_in_editor=True,
+                            ).strip().lower()
 
         if input_date in SHUTDOWN_COMMANDS:
             print("Good bye!")
