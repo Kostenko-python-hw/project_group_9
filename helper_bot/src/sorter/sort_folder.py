@@ -123,25 +123,21 @@ def post_processor(results_path, extensions_info):
             print(f"\t{item.name}")
 
 
-def sorter(folder_platform_path):
+def sorter(source_path, destination_path):
     extensions_info = collections.defaultdict(set)
-    folder_path = pathlib.Path(folder_platform_path)
-    # folder_path = pathlib.Path(folder_platform_path[0])
-    if not folder_path.is_dir():
-        raise RuntimeError("error: no such directory")
+
+    if not source_path.is_dir():
+        raise RuntimeError("Error: Source folder does not exist.")
 
     with tempfile.TemporaryDirectory() as tmp_platform_path:
         tmp_path = pathlib.Path(tmp_platform_path)
 
-        if diver(tmp_path, folder_path, extensions_info) is False:
-            raise RuntimeError("It's empty directory")
+        if diver(tmp_path, source_path, extensions_info) is False:
+            raise RuntimeError("Error: Source folder is empty.")
 
-        os.makedirs("results", exist_ok=True)
+        os.makedirs(destination_path, exist_ok=True)
 
-        results_path = pathlib.Path(
-            "results/"
-            f"result_{datetime.datetime.now().strftime('%d.%m.%y_%H_%M_%S')}"
-        )
+        results_path = destination_path / f"result_{datetime.datetime.now().strftime('%d.%m.%y_%H_%M_%S')}"
 
         shutil.copytree(
             str(tmp_path),
@@ -151,19 +147,23 @@ def sorter(folder_platform_path):
     post_processor(results_path, extensions_info)
 
 def sorter_interaction():
-    user_input = input(str("Enter path to folder: "))
-    if user_input:
+    source_path = input("Enter path to source folder: ")
+    destination_path = input("Enter path to destination folder: ")
+
+    if source_path and destination_path:
         try:
-            sorter(user_input)
+            source_path = pathlib.Path(source_path)
+            destination_path = pathlib.Path(destination_path)
+
+            if not source_path.is_dir():
+                raise RuntimeError("Error: Source folder does not exist.")
+
+            if not destination_path.is_dir():
+                raise RuntimeError("Error: Destination folder does not exist.")
+
+            sorter(source_path, destination_path)
         except RuntimeError as e:
             print(e)
     else:
-        print("No path was specified")
-            
-
-# if __name__ == "__main__":
-    # if len(sys.argv) != 2:
-    #     raise RuntimeError(f"usage: {sys.argv[0]} folder_platform_path")
-
-    # sorter(sys.argv[1])
+        print("Error: Both source and destination paths are required.")
 
