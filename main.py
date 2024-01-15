@@ -28,8 +28,7 @@ command_list2 = {
     'remove address': remove_address,
     'find contact': find_contact,
     'remove contact': remove_contact,
-    'search inf': search,
-    'current birthdays': birthdays
+    'search inf': search
      
 }
 

@@ -7,49 +7,61 @@ from src.constants import bcolors
 def close(contact_book: AddressBook):
     contact_book.save_to_file(CONTACTS_FILE_NAME)
     
-
-def create(contact_book: AddressBook):
+def valid_name():
     while True:
         name = input('Enter contact name: ')
         if name.isalpha():
-            break
+            return name
         else:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+
+def valid_phone():
     while True:
         print(f'Example phone number: {bcolors.OKGREEN}1234525680{bcolors.ENDC}')
         phone = input('Enter phone number:   ')
         try:
             Phone(phone)
-            break
+            return phone
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-            continue 
+
+
+def valid_email():
     while True:
+        print(f'Example email: {bcolors.OKGREEN}goit@gmail.com{bcolors.ENDC}')
         email = input('Enter email:   ')
         if email == '':
             email = None
-            break
+            return None
         try:
             Email(email)
-            break
+            return email
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-            continue
-    address = input('Enter address:  ')
-    if address == '':
-        address = None
+           
+
+def valid_birthday():
     while True:
         print(f'Example birthday: {bcolors.OKGREEN}12-01-1991{bcolors.ENDC}')
         birthday = input('Enter birthday:   ')
         if birthday == '':
             birthday = None
-            break
+            return None
         try:
             Birthday(birthday)
-            break
+            return birthday
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-            continue
+                                   
+
+def create(contact_book: AddressBook):
+    name = valid_name()
+    phone = valid_phone()
+    email = valid_email()
+    address = input('Enter address:  ')
+    if address == '':
+        address = None
+    birthday = valid_birthday()
     new_contact = Record(name, birthday, email, address)
     new_contact.add_phone(phone)
     contact_book.add_record(new_contact)
@@ -58,23 +70,10 @@ def create(contact_book: AddressBook):
 
 
 def add(contact_book: AddressBook):
-    while True:
-        name = input('Enter contact name:   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
-            while True:
-                print(f'Example phone number: {bcolors.OKGREEN}1234525680{bcolors.ENDC}')
-                phone = input('Enter phone number: ')
-                try:
-                    Phone(phone)
-                    break
-                except:
-                    print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                    continue 
+        if name.lower() == el.name.value.lower():
+            phone = valid_phone()
             el.add_phone(phone)
             print(f"Phone has been added to contact {bcolors.OKBLUE}{name}{bcolors.ENDC}")
             close(contact_book)
@@ -83,16 +82,8 @@ def add(contact_book: AddressBook):
 
 
 def change(contact_book: AddressBook):
-    while True:
-        print('Phone number must be in Contact book')
-        print(f'Example phone number: {bcolors.OKGREEN}1234525680{bcolors.ENDC}')
-        phone = input('Enter phone number:  ')
-        try:
-            Phone(phone)
-            break
-        except:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-            continue
+    print('Phone number must be in Contact book')
+    phone = valid_phone()
     for phone_contact_book in contact_book.data.values():
         for tel in phone_contact_book.phones:
             if phone == tel.value:
@@ -130,22 +121,10 @@ def start():
 
 
 def edit_email(contact_book: AddressBook):
-    while True:
-        name = input('Enter contact name:   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
-            while True:
-                email = input('Enter email:  ')
-                try:
-                    Email(email)
-                    break
-                except:
-                    print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                    continue
+        if name.lower() == el.name.value.lower():
+            email = valid_email()
             el.edit_email(email)
             close(contact_book)
             return  "Email edited successfully"   
@@ -153,27 +132,10 @@ def edit_email(contact_book: AddressBook):
 
 
 def edit_birthday(contact_book: AddressBook):
-    while True:
-        name = input('Enter contact name:   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-    
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
-            while True:
-                print(f'Example birthday: {bcolors.OKGREEN}12-01-1991{bcolors.ENDC}')
-                birthday = input('Enter birthday:   ')
-                if birthday == '':
-                    birthday = None
-                    break
-                try:
-                    Birthday(birthday)
-                    break
-                except:
-                    print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                    continue
+        if name.lower() == el.name.value.lower():
+            birthday = valid_birthday()
             el.edit_birthday(birthday)
             close(contact_book)
             return 'done'
@@ -181,14 +143,9 @@ def edit_birthday(contact_book: AddressBook):
 
 
 def edit_address(contact_book: AddressBook):
-    while True:
-        name = input('Enter contact name   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
+        if name.lower() == el.name.value.lower():
             address = input('Enter address  ')
             el.edit_address(address)
             close(contact_book)
@@ -197,22 +154,10 @@ def edit_address(contact_book: AddressBook):
 
 
 def remove_phone(contact_book: AddressBook):
-    while True:
-        name = input('Enter contact name   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
-            while True:
-                phone = input('Enter phone number  ')
-                try:
-                    Phone(phone)
-                    break
-                except:
-                    print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                    continue
+        if name.lower() == el.name.value.lower():
+            phone = valid_phone()
             print( f"Phone number {bcolors.FAIL}{phone}{bcolors.ENDC} removed successfully")
             el.remove_phone(phone) 
             close(contact_book) 
@@ -221,14 +166,9 @@ def remove_phone(contact_book: AddressBook):
  
 
 def remove_email(contact_book: AddressBook):
-    while True:
-        name = input('Enter name   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
+        if name.lower() == el.name.value.lower():
             el.remove_email()
             close(contact_book)
             return 'done'          
@@ -236,14 +176,9 @@ def remove_email(contact_book: AddressBook):
 
 
 def remove_address(contact_book: AddressBook):
-    while True:
-        name = input('Enter contact name:   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
+        if name.lower() == el.name.value.lower():
             el.remove_address()
             close(contact_book)
             return 'removed'         
@@ -251,14 +186,9 @@ def remove_address(contact_book: AddressBook):
 
 
 def remove_birthday(contact_book: AddressBook):
-    while True:
-        name = input('Enter name:   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     for el in contact_book.data.values():
-        if name == el.name.value:
+        if name.lower() == el.name.value.lower():
             el.remove_birthday()   
             close(contact_book)
             return 'done'     
@@ -266,22 +196,12 @@ def remove_birthday(contact_book: AddressBook):
 
 
 def find_contact(contact_book: AddressBook):
-    while True:
-        name = input('Enter name: ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     contact_book.find(name)   
 
 
 def remove_contact(contact_book: AddressBook):
-    while True:
-        name = input('Enter name:   ')
-        if name.isalpha():
-            break
-        else:
-            print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+    name = valid_name()
     contact_book.delete(name) 
     close(contact_book)
 
