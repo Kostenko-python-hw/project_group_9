@@ -18,7 +18,8 @@ def add_note_handler():
         note_input_handler.get_description(new_note)
 
         if new_note.title.value == '' and new_note.description.value == '':
-            print(f"{bcolors.FAIL}Note can't be without a title and description{bcolors.ENDC}")
+            print(
+                f"{bcolors.FAIL}Note can't be without a title and description{bcolors.ENDC}")
         else:
             # add tags
             note_input_handler.get_tags(new_note)
@@ -27,7 +28,8 @@ def add_note_handler():
             notes_database = NoteBook()
             try:
                 notes_database.add(new_note)
-                print(f"{bcolors.OKGREEN}The note has been successfully added{bcolors.ENDC}")
+                print(
+                    f"{bcolors.OKGREEN}The note has been successfully added{bcolors.ENDC}")
             except Exception as e:
                 print(f"{bcolors.FAIL}Something went wrong: {e}{bcolors.ENDC}")
             break
@@ -61,7 +63,8 @@ def search_note():
                 if is_printed:
                     break
             else:
-                print(f"{bcolors.WARNING}No results found for the query.{bcolors.ENDC}")
+                print(
+                    f"{bcolors.WARNING}No results found for the query.{bcolors.ENDC}")
         elif choice == "2":
             search = input("Search: ")
             notes_database = NoteBook()
@@ -71,11 +74,13 @@ def search_note():
                 if is_printed:
                     break
             else:
-                print(f"{bcolors.WARNING}No results found for the query.{bcolors.ENDC}")
+                print(
+                    f"{bcolors.WARNING}No results found for the query.{bcolors.ENDC}")
         elif choice == '3':
-            break 
+            break
         else:
-            print(f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")
+            print(
+                f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")
 
 
 # DELETE _NOTE
@@ -95,13 +100,14 @@ def delete_note():
                 notes_database = NoteBook()
                 is_deleted = notes_database.delete(int(entered_id))
                 if is_deleted:
-                    print(f"{bcolors.OKGREEN}The note was successfully deleted{bcolors.ENDC}")
+                    print(
+                        f"{bcolors.OKGREEN}The note was successfully deleted{bcolors.ENDC}")
                     break
                 else:
                     print(f"{bcolors.WARNING}Id not found.{bcolors.ENDC}")
             except ValueError:
                 print(f"{bcolors.FAIL}The id must be a number.{bcolors.ENDC}")
-   
+
 
 # EDIT _NOTE
 def edit_note():
@@ -130,40 +136,53 @@ def edit_note():
                     choice = input("Enter the number of your choice: ")
 
                     if choice == "1":
-                        print(f"{bcolors.WARNING}Title must contain at most 50 characters.{bcolors.ENDC}")
+                        print(
+                            f"{bcolors.WARNING}Title must contain at most 50 characters.{bcolors.ENDC}")
                         try:
                             new_title = input("Enter a new title: ")
-                            notes_database.edit(int(entered_id), new_title, 'title')
-                            print(f"{bcolors.OKGREEN}The title was successfully edited{bcolors.ENDC}")
+                            notes_database.edit(
+                                int(entered_id), new_title, 'title')
+                            print(
+                                f"{bcolors.OKGREEN}The title was successfully edited{bcolors.ENDC}")
                             break
                         except ValueError as e:
                             print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
                     elif choice == "2":
-                        print(f"{bcolors.WARNING}Description must contain at most 80 characters.{bcolors.ENDC}")
+                        print(
+                            f"{bcolors.WARNING}Description must contain at most 80 characters.{bcolors.ENDC}")
                         try:
-                            new_description = input("Enter a new description: ")
-                            notes_database.edit(int(entered_id), new_description, 'description')
-                            print(f"{bcolors.OKGREEN}The description was successfully edited{bcolors.ENDC}")
+                            new_description = input(
+                                "Enter a new description: ")
+                            notes_database.edit(
+                                int(entered_id), new_description, 'description')
+                            print(
+                                f"{bcolors.OKGREEN}The description was successfully edited{bcolors.ENDC}")
                             break
                         except ValueError as e:
                             print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
                     elif choice == "3":
-                        print(f"{bcolors.WARNING}Tags must contain at most 40 characters.{bcolors.ENDC}")
-                        print(f"{bcolors.OKBLUE}Multiple tags can be separated with a comma{bcolors.ENDC}")
+                        print(
+                            f"{bcolors.WARNING}Tags must contain at most 40 characters.{bcolors.ENDC}")
+                        print(
+                            f"{bcolors.OKBLUE}Multiple tags can be separated with a comma{bcolors.ENDC}")
                         try:
                             new_tags = input("Enter new tags: ")
                             if len(new_tags) <= 80:
-                                notes_database.edit(int(entered_id), new_tags, 'tags')
-                                print(f"{bcolors.OKGREEN}The tags was successfully edited{bcolors.ENDC}")
+                                notes_database.edit(
+                                    int(entered_id), new_tags, 'tags')
+                                print(
+                                    f"{bcolors.OKGREEN}The tags was successfully edited{bcolors.ENDC}")
                                 break
                             else:
-                                print(f"{bcolors.FAIL}Tags must contain at most 40 characters.{bcolors.ENDC}")
+                                print(
+                                    f"{bcolors.FAIL}Tags must contain at most 40 characters.{bcolors.ENDC}")
                         except ValueError as e:
                             print(f"{bcolors.FAIL}{e}{bcolors.ENDC}")
                     elif choice == '4':
-                        break 
+                        break
                     else:
-                        print(f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")
+                        print(
+                            f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")
             except ValueError:
                 print(f"{bcolors.FAIL}The id must be a number.{bcolors.ENDC}")
 
@@ -174,7 +193,8 @@ def print_table(data):
     print(underline)
     for key, note in data.items():
         print("|{:^6}|{:^52}|{:^42}|{:^82}|".format(key, str(note.title) or 'undefined',
-                                                    ', '.join(p.value for p in note.tags) or 'undefined',
+                                                    ', '.join(
+                                                        p.value for p in note.tags) or 'undefined',
                                                     str(note.description) or 'undefined'))
     print(underline)
 
@@ -192,16 +212,20 @@ def print_sorted_result(result):
             print_table(result)
             return True
         elif to_sort_by == '2':
-            sorted_results = dict(sorted(result.items(), key=lambda x: x[1].title))
+            sorted_results = dict(
+                sorted(result.items(), key=lambda x: x[1].title))
             print_table(sorted_results)
             return True
         elif to_sort_by == '3':
-            sorted_results = dict(sorted(result.items(), key=lambda x: x[1].tags))
+            sorted_results = dict(
+                sorted(result.items(), key=lambda x: x[1].tags))
             print_table(sorted_results)
             return True
         elif to_sort_by == '4':
-            sorted_results = dict(sorted(result.items(), key=lambda x: x[1].description))
+            sorted_results = dict(
+                sorted(result.items(), key=lambda x: x[1].description))
             print_table(sorted_results)
             return True
         else:
-            print(f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")
+            print(
+                f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")

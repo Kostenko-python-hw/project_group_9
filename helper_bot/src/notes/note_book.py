@@ -75,4 +75,5 @@ class NoteBook(UserDict):
 
     def save_to_file(self):
         with open(NOTES_FILE_NAME, "wb") as fh:
-            pickle.dump({"data": self.data, "notes_counter": self.notes_counter}, fh)
+            pickle.dump(
+                {"data": self.data, "notes_counter": self.notes_counter}, fh)
