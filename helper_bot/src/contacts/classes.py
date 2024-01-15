@@ -226,7 +226,7 @@ class AddressBook(UserDict):
         output = []
         if inf.isalpha():
             for el in self.data.values():
-                if inf in el.name.value:
+                if inf.lower() in el.name.value.lower():
                     output.append(str(el))
         elif inf.isdigit():
             for el in self.data.values():

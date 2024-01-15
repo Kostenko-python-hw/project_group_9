@@ -26,9 +26,9 @@ address_book_commands_list = {
     'remove email': remove_email,
     'remove birthday': remove_birthday,
     'remove address': remove_address,
-    'find contact': find_contact,
+    'search contact by name': find_contact,
     'remove contact': remove_contact,
-    'search inf': search
+    'search contact': search
 
 }
 
