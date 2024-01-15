@@ -28,19 +28,20 @@ class NoteBook(UserDict):
         self.notes_counter += 1
         self.save_to_file()
 
-    def search(self, value: str, option):
-        result = set()
-        for el in self.data.values():
+    def search(self, data: str, option):
+        result = {}
+        for key, value in self.data.items():
             record = False
             if option == 'tag':
-                record = el.find_by_tag(value)
+                record = value.find_by_tag(data)
             elif option == 'content':
-                record = el.find_in_content(value)
+                record = value.find_in_content(data)
 
             if record:
-                result.add(str(record))
-            if len(result) > 0:
-                return '\n'.join([str(record) for record in result])
+                result[key] = record
+
+        if len(result) > 0:
+            return result
 
     def delete(self, id):
         if id in self.data:
