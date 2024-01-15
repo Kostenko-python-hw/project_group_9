@@ -1,7 +1,7 @@
 import pickle
 from collections import UserDict
-from src.notes.note import Note
-from src.constants import NOTES_FILE_NAME
+from helper_bot.src.notes.note import Note
+from helper_bot.src.constants import NOTES_FILE_NAME
 
 
 class NoteBook(UserDict):

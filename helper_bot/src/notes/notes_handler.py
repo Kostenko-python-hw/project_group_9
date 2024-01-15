@@ -1,7 +1,7 @@
-from src.constants import bcolors, note_header, underline
-from src.notes.note_book import NoteBook
-from src.notes.note import Note
-from src.notes.note_input_handler import NoteInputHandler
+from helper_bot.src.constants import bcolors, note_header, underline
+from helper_bot.src.notes.note_book import NoteBook
+from helper_bot.src.notes.note import Note
+from helper_bot.src.notes.note_input_handler import NoteInputHandler
 
 
 # ADD NOTE

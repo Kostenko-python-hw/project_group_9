@@ -2,7 +2,7 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 import re
-from src.constants import bcolors
+from helper_bot.src.constants import bcolors
 
 class Field:
     def __init__(self, value):

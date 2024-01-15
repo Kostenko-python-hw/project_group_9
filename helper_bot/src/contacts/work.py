@@ -1,13 +1,14 @@
-from src.constants import CONTACTS_FILE_NAME
-from src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
 from pathlib import Path
-from src.constants import bcolors
+
+from helper_bot.src.constants import CONTACTS_FILE_NAME
+from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
+from helper_bot.src.constants import bcolors
 
 
 def close(contact_book: AddressBook):
     contact_book.save_to_file(CONTACTS_FILE_NAME)
     
-def valid_name():
+def valid_name(): 
     while True:
         name = input('Enter contact name: ')
         if name.isalpha():

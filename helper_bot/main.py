@@ -1,11 +1,14 @@
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
 
-from src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
-from src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
-from src.contacts.work import start, close,  search, birthdays
+from helper_bot.src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
+from helper_bot.src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
+from helper_bot.src.contacts.work import start, close,  search, birthdays
 
-
+# @todo move this to config
 shutdown_commands = ('good bye', 'close', 'exit')
 
+# @todo make decorator, use it near function definitions, collect all commands to dict and export dict to use in main
 command_list = {
     'add note': add_note_handler,
     'show all notes': show_all_notes,
@@ -29,7 +32,7 @@ command_list2 = {
     'find contact': find_contact,
     'remove contact': remove_contact,
     'search inf': search
-     
+
 }
 
 
@@ -42,10 +45,13 @@ def cmd_parser(command, contact_book):
         print('Command not found')
 
 
-def global_handler():
+def main():
     contact_book = start()
+    commands_completer = WordCompleter(command_list2)
+
     while True:
-        input_date = input('Enter the command: ').strip().lower()
+        input_date = prompt('Enter the command: ',
+                            completer=commands_completer).strip().lower()
 
         if input_date in shutdown_commands:
             print("Good bye!")
@@ -55,10 +61,6 @@ def global_handler():
             print('Blank line is not a command.')
         else:
             cmd_parser(input_date, contact_book)
-
-
-def main():
-    global_handler()
 
 
 if __name__ == '__main__':

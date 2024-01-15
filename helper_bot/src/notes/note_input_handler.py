@@ -1,5 +1,5 @@
-from src.notes.tag import Tag
-from src.constants import bcolors
+from helper_bot.src.notes.tag import Tag
+from helper_bot.src.constants import bcolors
 
 
 class NoteInputHandler:
