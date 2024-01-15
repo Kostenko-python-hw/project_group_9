@@ -1,3 +1,4 @@
+import sys
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 
@@ -50,16 +51,16 @@ def main():
     commands_completer = WordCompleter(notes_commands)
 
     while True:
-        # To work in console
-        input_date = prompt('Enter the command: ',
-                            completer=commands_completer,
-                            mouse_support=True,
-                            swap_light_and_dark_colors=True,
-                            search_ignore_case=True,
-                            enable_open_in_editor=True,
-                            ).strip().lower()
-        # To work in IDE
-        # input_date = input('Enter the command: ').strip().lower()
+        if sys.stdin.isatty():
+            input_date = prompt('Enter the command: ',
+                                completer=commands_completer,
+                                mouse_support=True,
+                                swap_light_and_dark_colors=True,
+                                search_ignore_case=True,
+                                enable_open_in_editor=True,
+                                ).strip().lower()
+        else:
+            input_date = input('Enter the command: ').strip().lower()
 
         if input_date in SHUTDOWN_COMMANDS:
             print("Good bye!")
