@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from helper_bot.src.constants import CONTACTS_FILE_NAME
+from helper_bot.src.storage import CONTACTS_FILE_NAME
 from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
 from helper_bot.src.constants import bcolors
 
