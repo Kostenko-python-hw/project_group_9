@@ -11,7 +11,7 @@ class Field:
     def value(self, value):
         self.__value = self.validate(value)
 
-    def validate(self, _):
+    def validate(self, value):
         pass
 
     def check_availability(self, value: str):
@@ -19,3 +19,9 @@ class Field:
 
     def __str__(self):
         return str(self.value)
+
+    def __lt__(self, other):
+        return self.value < other.value
+
+    def __eq__(self, other):
+        return self.value == other.value
