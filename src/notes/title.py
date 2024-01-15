@@ -10,6 +10,3 @@ class Title(Field):
 
     def check_availability(self, value: str):
         return value in str(self.value).lower()
-    #
-    # def __str__(self):
-    #     return str(self.value)

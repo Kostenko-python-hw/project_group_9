@@ -39,7 +39,7 @@ def show_all_notes():
     if len(notes_database) == 0:
         print('You don\'t have any notes yet.')
     else:
-        print_table(notes_database)
+        print_sorted_result(notes_database)
 
 
 # SEARCH NOTE
@@ -57,8 +57,9 @@ def search_note():
             notes_database = NoteBook()
             result = notes_database.search(search.lower().strip(), 'tag')
             if result:
-                print_table(result)
-                break
+                is_printed = print_sorted_result(result)
+                if is_printed:
+                    break
             else:
                 print(f"{bcolors.WARNING}No results found for the query.{bcolors.ENDC}")
         elif choice == "2":
@@ -66,8 +67,9 @@ def search_note():
             notes_database = NoteBook()
             result = notes_database.search(search.lower().strip(), 'content')
             if result:
-                print_table(result)
-                break
+                is_printed = print_sorted_result(result)
+                if is_printed:
+                    break
             else:
                 print(f"{bcolors.WARNING}No results found for the query.{bcolors.ENDC}")
         elif choice == '3':
@@ -175,3 +177,31 @@ def print_table(data):
                                                     ', '.join(p.value for p in note.tags) or 'undefined',
                                                     str(note.description) or 'undefined'))
     print(underline)
+
+
+def print_sorted_result(result):
+    print(f"{bcolors.OKBLUE}Do you want to sort the result?{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}1. No{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}2. Yes, by title{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}3. Yes, by tags{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}4. Yes, by description{bcolors.ENDC}")
+    while True:
+        to_sort_by = input("Enter the number of your choice: ")
+
+        if to_sort_by == '1':
+            print_table(result)
+            return True
+        elif to_sort_by == '2':
+            sorted_results = dict(sorted(result.items(), key=lambda x: x[1].title))
+            print_table(sorted_results)
+            return True
+        elif to_sort_by == '3':
+            sorted_results = dict(sorted(result.items(), key=lambda x: x[1].tags))
+            print_table(sorted_results)
+            return True
+        elif to_sort_by == '4':
+            sorted_results = dict(sorted(result.items(), key=lambda x: x[1].description))
+            print_table(sorted_results)
+            return True
+        else:
+            print(f"{bcolors.FAIL}Invalid choice. Please enter a valid number.{bcolors.ENDC}")
