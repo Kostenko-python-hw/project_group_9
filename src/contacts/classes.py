@@ -243,17 +243,25 @@ class AddressBook(UserDict):
         return output
 
     def find(self, name):
+        name2 = name.title()
         if name in self.data:
             print(str(self.data[name] ))
+        elif name2 in self.data:
+            print(str(self.data[name2] ))     
         else:
             print(f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
     
     
     def delete(self, name):
+        name2 = name.title()
         if name in self.data:
             del self.data[name]
             print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
             return 'done'
+        elif name2 in self.data:
+            del self.data[name2]
+            print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
+            return 'done'  
         print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
 
     def save_to_file(self, filename):
@@ -304,60 +312,3 @@ class AddressBook(UserDict):
         return result_contacts
         
         
-if __name__ == '__main__':
-    # #Тести
-    # # Створення нової адресної книги
-    new_book = AddressBook()
-
-    john = Record("John", "20-05-2000", "contact_email123@gmail.com", "Street 45")
-    john.add_phone("1234567890")
-
-    new_book.add_record(john)
-    print(john) 
-    john.edit_birthday('19-03-2000')
-    john.edit_address('Street 37')
-    print(new_book.find("John"))
-    john.remove_address()
-    print(new_book.find("John"))
-    # # Завантаження адресної книги з диску
-    # new_book.load_from_file('address_book.pkl')
-
-    # # Створення запису для John
-    # john_record = Record("John")
-    # john_record.add_phone("1234567890")
-    # john_record.add_phone("5555555555")
-
-    # # Додавання запису John до адресної книги
-    # new_book.add_record(john_record)
-
-    # # Створення та додавання нового запису для Jane
-    # jane_record = Record("Jane")
-    # jane_record.add_phone("9876543210")
-    # new_book.add_record(jane_record)
-
-    # # Виведення всіх записів у книзі
-    # for name, record in new_book.data.items():
-    #     print(record)
-
-    # # Знаходження та редагування телефону для John
-    # john = new_book.find("John")
-    # john.edit_phone("1234567890", "1112223333")
-
-    # print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
-
-    # # Пошук конкретного телефону у записі John
-    # found_phone = john.find_phone("5555555555")
-    # print(f"{john.name}: {found_phone}")  # Виведення: 5555555555
-
-    # # Видалення запису Jane
-    # new_book.delete("Jane")
-
-    # john = Record("John", "20-05-2000", "contact_email123@gmail.com", "Street 45")
-    # print(john)  # Виведення кількості днів до наступного дня народження
-
-    # # Перевірка пагінації
-    # for batch in new_book.iterator(batch_size=1):
-    #     for record in batch:
-    #         print(record)
-
-    # new_book.save_to_file('address_book.pkl')
