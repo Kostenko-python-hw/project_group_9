@@ -247,6 +247,7 @@ class AddressBook(UserDict):
     def delete(self, name):
         for el in self.data:
             if name.lower() == el.lower():
+                self.data.pop(el)
                 print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
                 return 'done'
         print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
