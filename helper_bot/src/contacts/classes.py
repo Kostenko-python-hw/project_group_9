@@ -209,7 +209,7 @@ class Record:
 
     def __str__(self):
         phones_str = "; ".join(self.get_phones())
-        return f"Contact name: {bcolors.OKBLUE}{self.name}{bcolors.ENDC}, phones:{bcolors.OKGREEN} {phones_str}{bcolors.ENDC}, birthday: {bcolors.OKBLUE}{self.birthday}{bcolors.ENDC}, email: {bcolors.OKBLUE}{self.email}{bcolors.ENDC}, address: {bcolors.OKBLUE}{self.address}{bcolors.ENDC}"
+        return f"Contact name: {bcolors.OKBLUE}{self.name}{bcolors.ENDC}, phones:{bcolors.OKGREEN} {phones_str}{bcolors.ENDC}, birthday: {bcolors.WARNING}{self.birthday}{bcolors.ENDC}, email: {bcolors.WARNING}{self.email}{bcolors.ENDC}, address: {bcolors.WARNING}{self.address}{bcolors.ENDC}"
 
 
 class AddressBook(UserDict):
@@ -237,29 +237,20 @@ class AddressBook(UserDict):
         return output
 
     def find(self, name):
-        name2 = name.title()
-        if name in self.data:
-            print(str(self.data[name]))
-        elif name2 in self.data:
-            print(str(self.data[name2]))
-        else:
-            print(
-                f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
+        for el in self.data:
+            if name.lower() == el.lower():
+                print(str(self.data[el]))
+                return 'Done'
+        
+        print( f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
 
     def delete(self, name):
-        name2 = name.title()
-        if name in self.data:
-            del self.data[name]
-            print(
-                f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
-            return 'done'
-        elif name2 in self.data:
-            del self.data[name2]
-            print(
-                f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
-            return 'done'
+        for el in self.data:
+            if name.lower() == el.lower():
+                print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
+                return 'done'
         print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
-
+     
     def save_to_file(self, filename):
         with open(filename, 'wb') as file:
             pickle.dump(self, file)
