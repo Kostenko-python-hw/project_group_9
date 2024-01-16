@@ -14,7 +14,7 @@ general_commands_list = {
     'search note': search_note,
     'delete note': delete_note,
     'edit note': edit_note,
-    'sort_folder': sorter_interaction
+    'sort folder': sorter_interaction
 }
 
 
