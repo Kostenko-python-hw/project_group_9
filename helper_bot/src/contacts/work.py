@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import datetime
 from helper_bot.src.storage import CONTACTS_FILE_NAME
 from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
 from helper_bot.src.constants import bcolors
@@ -53,7 +53,9 @@ def valid_birthday():
             return None
         try:
             birth = Birthday(birthday)
-            if 1900 < birth.value.year < 2025:
+            today = datetime.date.today()
+            current_year = today.year
+            if 1900 < birth.value.year < current_year:
                 return birthday
             else:
                 print('Year must be appropriate to the age')
