@@ -181,18 +181,15 @@ class Record:
             this_year = today.year
             days_b4_birthday = 0
 
-            birthday_date_obj = datetime.strptime(
-                self.birthday.value, '%d-%m-%Y')
-
             this_year_birthday_obj = datetime(
                 year=this_year,
-                month=birthday_date_obj.month,
-                day=birthday_date_obj.day
+                month=self.birthday.value.month,
+                day=self.birthday.value.day
             )
             next_year_birthday_obj = datetime(
                 year=this_year + 1,
-                month=birthday_date_obj.month,
-                day=birthday_date_obj.day
+                month=self.birthday.value.month,
+                day=self.birthday.value.day
             )
 
             if this_year_birthday_obj < today:
@@ -291,9 +288,12 @@ class AddressBook(UserDict):
         '''
         This method returns the contacts whose birthdays will come in next number of "days"
         '''
-        result_contacts = []
+        flag = False
         for record in self.data.values():
             if record.birthday and record.days_to_birthday() < days:
-                result_contacts.append(str(record))
+                print(record)
+                flag = True
 
-        return result_contacts
+        if not flag:
+            print('All contacts have no birthdays during this period')
+        

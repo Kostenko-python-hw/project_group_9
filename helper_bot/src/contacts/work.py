@@ -252,7 +252,7 @@ def birthdays(contact_book: AddressBook):
         else:
             print('Incorrect value')
     quant = int(quant)
-    print(contact_book.contacts_birthdays(quant))
+    contact_book.contacts_birthdays(quant)
 
 
 def search(contact_book: AddressBook):
