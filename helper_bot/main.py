@@ -47,8 +47,8 @@ def cmd_parser(command, contact_book):
 
 def main():
     contact_book = start()
-    notes_commands = list(address_book_commands_list.keys()) + list(general_commands_list.keys()) + list(SHUTDOWN_COMMANDS)
-    commands_completer = WordCompleter(notes_commands)
+    commands = list(address_book_commands_list.keys()) + list(general_commands_list.keys()) + list(SHUTDOWN_COMMANDS)
+    commands_completer = WordCompleter(commands)
 
     while True:
         if sys.stdin.isatty():
