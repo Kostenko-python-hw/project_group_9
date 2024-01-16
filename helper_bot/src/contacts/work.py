@@ -52,8 +52,11 @@ def valid_birthday():
             birthday = None
             return None
         try:
-            Birthday(birthday)
-            return birthday
+            birth = Birthday(birthday)
+            if 1900 < birth.value.year < 2025:
+                return birthday
+            else:
+                print('Year must be appropriate to the age')
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
 
