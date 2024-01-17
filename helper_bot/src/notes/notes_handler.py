@@ -1,6 +1,6 @@
 from helper_bot.src.constants import bcolors, note_header, underline
-from helper_bot.src.notes.note_book import NoteBook
 from helper_bot.src.notes.note import Note
+from helper_bot.src.notes.note_book import NoteBook
 from helper_bot.src.notes.note_input_handler import NoteInputHandler
 
 
@@ -85,7 +85,8 @@ def search_note():
 
 # DELETE _NOTE
 def delete_note():
-    print(f"{bcolors.WARNING}If you don't know the id, you can use 'search note' to search for the note, or 'show all notes' to display all notes{bcolors.ENDC}")
+    print(
+        f"{bcolors.WARNING}If you don't know the id, you can use 'search note' to search for the note, or 'show all notes' to display all notes{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Enter q to exit{bcolors.ENDC}")
 
     while True:
@@ -111,7 +112,8 @@ def delete_note():
 
 # EDIT _NOTE
 def edit_note():
-    print(f"{bcolors.WARNING}If you don't know the id, you can use 'search note' to search for the note, or 'show all notes' to display all notes{bcolors.ENDC}")
+    print(
+        f"{bcolors.WARNING}If you don't know the id, you can use 'search note' to search for the note, or 'show all notes' to display all notes{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Enter q to exit{bcolors.ENDC}")
     while True:
         entered_id = input("Enter the id of the note you want to edit: ")

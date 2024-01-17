@@ -1,6 +1,6 @@
 import pickle
-
 from collections import UserDict
+
 from helper_bot.src.notes.note import Note
 from helper_bot.src.storage import NOTES_FILE_NAME
 
@@ -56,13 +56,13 @@ class NoteBook(UserDict):
         else:
             return False
 
-    def edit(self, id, value, option):
+    def edit(self, _id, value, option):
         if option == 'title':
-            self.data[id].title = value
+            self.data[_id].title = value
         elif option == 'description':
-            self.data[id].description = value
+            self.data[_id].description = value
         elif option == 'tags':
-            self.data[id].tags = value.split(',')
+            self.data[_id].tags = value.split(',')
 
         self.save_to_file()
 
