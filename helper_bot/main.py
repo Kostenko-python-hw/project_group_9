@@ -5,7 +5,7 @@ from prompt_toolkit.completion import WordCompleter
 from helper_bot.src.sorter.sort_folder import sorter_interaction
 from helper_bot.src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
 from helper_bot.src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
-from helper_bot.src.contacts.work import start, close,  search
+from helper_bot.src.contacts.work import start, close,  search, birthdays
 from helper_bot.src.constants import SHUTDOWN_COMMANDS
 
 general_commands_list = {
@@ -32,7 +32,8 @@ address_book_commands_list = {
     'remove address': remove_address,
     'search contact by name': find_contact,
     'remove contact': remove_contact,
-    'search contact': search
+    'search contact': search,
+    'birthdays': birthdays
 
 }
 
