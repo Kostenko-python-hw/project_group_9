@@ -1,7 +1,7 @@
 from pathlib import Path
 import datetime
 from helper_bot.src.storage import CONTACTS_FILE_NAME
-from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday
+from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday, Name
 from helper_bot.src.constants import bcolors
 
 
@@ -12,10 +12,12 @@ def close(contact_book: AddressBook):
 def valid_name():
     while True:
         name = input('Enter contact name: ')
-        if name.isalpha():
+        try:
+            Name(name)
             return name
-        else:
+        except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
+                
 
 
 def valid_phone():
