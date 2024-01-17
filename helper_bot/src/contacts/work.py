@@ -21,7 +21,7 @@ def valid_name():
 def valid_phone():
     while True:
         print(
-            f'Example phone number: {bcolors.OKGREEN}1234525680{bcolors.ENDC}')
+            f'Example phone number: {bcolors.OKGREEN}0673804545{bcolors.ENDC}')
         phone = input('Enter phone number:   ')
         try:
             Phone(phone)
@@ -190,12 +190,16 @@ def remove_phone(contact_book: AddressBook):
     name = valid_name()
     for el in contact_book.data.values():
         if name.lower() == el.name.value.lower():
-            phone = valid_phone()
-            print(
-                f"Phone number {bcolors.FAIL}{phone}{bcolors.ENDC} removed successfully")
-            el.remove_phone(phone)
-            close(contact_book)
-            return 'done'
+            if len(el.phones) == 1:
+                print(f'Sorry, you can"t remove phone number.Contact {bcolors.FAIL}{el.name.value}{bcolors.ENDC} has only one phone.')
+                return None
+            else:
+                phone = valid_phone()
+                print(
+                    f"Phone number {bcolors.FAIL}{phone}{bcolors.ENDC} removed successfully")
+                el.remove_phone(phone)
+                close(contact_book)
+                return 'done'
     print(
         f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
 
