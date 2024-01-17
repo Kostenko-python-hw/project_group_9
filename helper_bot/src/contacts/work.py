@@ -1,8 +1,9 @@
-from pathlib import Path
 import datetime
-from helper_bot.src.storage import CONTACTS_FILE_NAME
-from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday, Name
+from pathlib import Path
+
 from helper_bot.src.constants import bcolors
+from helper_bot.src.contacts.classes import Record, AddressBook, Phone, Email, Birthday, Name
+from helper_bot.src.storage import CONTACTS_FILE_NAME
 
 
 def close(contact_book: AddressBook):
@@ -17,7 +18,6 @@ def valid_name():
             return name
         except:
             print(f"{bcolors.FAIL}Incorrect value{bcolors.ENDC}")
-                
 
 
 def valid_phone():
@@ -73,9 +73,9 @@ def create(contact_book: AddressBook):
             if name.lower() == el.lower():
                 i = False
                 print(f' There is a contact with  name {name} in Contact book')
-                break 
+                break
         if i == True:
-            break      
+            break
     phone = valid_phone()
     email = valid_email()
     address = input('Enter address:  ')
@@ -131,10 +131,11 @@ def change(contact_book: AddressBook):
                         f"Phone number {bcolors.OKBLUE}{phone}{bcolors.ENDC} has been replaced by {bcolors.OKGREEN}{new_phone}{bcolors.ENDC}")
                     close(contact_book)
                     return 'changed'
-            print(f'Contact {name} has not phone {phone}') 
-            return None         
+            print(f'Contact {name} has not phone {phone}')
+            return None
     print(
         f'There is not contact witn name {bcolors.FAIL}{name}{bcolors.ENDC} in the contact book ')
+
 
 def show(contact_book: AddressBook):
     res = contact_book.list_contacts()
@@ -193,7 +194,8 @@ def remove_phone(contact_book: AddressBook):
     for el in contact_book.data.values():
         if name.lower() == el.name.value.lower():
             if len(el.phones) == 1:
-                print(f'Sorry, you can"t remove phone number.Contact {bcolors.FAIL}{el.name.value}{bcolors.ENDC} has only one phone.')
+                print(
+                    f'Sorry, you can"t remove phone number.Contact {bcolors.FAIL}{el.name.value}{bcolors.ENDC} has only one phone.')
                 return None
             else:
                 phone = valid_phone()

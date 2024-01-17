@@ -1,7 +1,8 @@
-from collections import UserDict
-from datetime import datetime
 import pickle
 import re
+from collections import UserDict
+from datetime import datetime
+
 from helper_bot.src.constants import bcolors
 
 
@@ -229,8 +230,8 @@ class AddressBook(UserDict):
             if name.lower() == el.lower():
                 print(str(self.data[el]))
                 return 'Done'
-        
-        print( f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
+
+        print(f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
 
     def delete(self, name):
         for el in self.data:
@@ -239,7 +240,7 @@ class AddressBook(UserDict):
                 print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
                 return 'done'
         print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
-     
+
     def save_to_file(self, filename):
         with open(filename, 'wb') as file:
             pickle.dump(self, file)
@@ -287,4 +288,3 @@ class AddressBook(UserDict):
 
         if not flag:
             print('All contacts have no birthdays during this period')
-        
