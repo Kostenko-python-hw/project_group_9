@@ -29,10 +29,11 @@ class Field:
 
 class Name(Field):
     def is_valid(self, value):
-        if value.isalpha():
-            return True
-        else:
-            return False
+        value2 = value.split(' ')
+        for el in value2:
+            if not el.isalpha():
+                return False
+        return True
 
 
 class Phone(Field):
@@ -63,16 +64,6 @@ class Birthday(Field):
                 return True
             except ValueError:
                 return False
-
-    # def days_to_birthday(self):
-    #     if self.__value:
-    #         today = datetime.now().date()
-    #         next_birthday = datetime(today.year, self.__value.month, self.__value.day).date()
-    #         if today > next_birthday:
-    #             next_birthday = datetime(today.year + 1, self.__value.month, self.__value.day).date()
-    #         days_left = (next_birthday - today).days
-    #         return days_left
-    #     return None
 
 
 class Email(Field):
