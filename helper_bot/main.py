@@ -1,13 +1,23 @@
-import sys
 import re
+import sys
+
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 
+<<<<<<< HEAD
 from helper_bot.src.sorter.sort_folder import sorter_interaction
 from helper_bot.src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
 from helper_bot.src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
 from helper_bot.src.contacts.work import start, close,  search, birthdays
+=======
+>>>>>>> main
 from helper_bot.src.constants import SHUTDOWN_COMMANDS
+from helper_bot.src.contacts.work import add, create, change, show, edit_email, edit_address, edit_birthday, \
+    remove_address, remove_birthday, remove_email, remove_phone, find_contact, remove_contact
+from helper_bot.src.contacts.work import start, close, search, birthdays
+from helper_bot.src.notes.notes_handler import add_note_handler, show_all_notes, search_note, delete_note, edit_note
+from helper_bot.src.sorter.sort_folder import sorter_interaction
+
 
 def help_func():
     reg_exp = re.compile(r'- \*\*.*')
@@ -33,7 +43,6 @@ general_commands_list = {
     'help': help_func
 }
 
-
 address_book_commands_list = {
     'add phone': add,
     'create contact': create,
@@ -49,8 +58,13 @@ address_book_commands_list = {
     'search contact by name': find_contact,
     'remove contact': remove_contact,
     'search contact': search,
+<<<<<<< HEAD
     'birthdays': birthdays
+=======
+    'birthdays': birthdays,
+>>>>>>> main
 }
+
 
 def cmd_parser(command, contact_book):
     if command in general_commands_list:

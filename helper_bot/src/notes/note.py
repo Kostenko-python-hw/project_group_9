@@ -1,6 +1,6 @@
-from helper_bot.src.notes.title import Title
 from helper_bot.src.notes.description import Description
 from helper_bot.src.notes.tag import Tag
+from helper_bot.src.notes.title import Title
 
 
 class Note:

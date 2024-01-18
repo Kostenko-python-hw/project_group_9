@@ -1,7 +1,8 @@
-from collections import UserDict
-from datetime import datetime
 import pickle
 import re
+from collections import UserDict
+from datetime import datetime
+
 from helper_bot.src.constants import bcolors
 
 
@@ -29,10 +30,11 @@ class Field:
 
 class Name(Field):
     def is_valid(self, value):
-        if value.isalpha():
-            return True
-        else:
-            return False
+        value2 = value.split(' ')
+        for el in value2:
+            if not el.isalpha():
+                return False
+        return True
 
 
 class Phone(Field):
@@ -63,16 +65,6 @@ class Birthday(Field):
                 return True
             except ValueError:
                 return False
-
-    # def days_to_birthday(self):
-    #     if self.__value:
-    #         today = datetime.now().date()
-    #         next_birthday = datetime(today.year, self.__value.month, self.__value.day).date()
-    #         if today > next_birthday:
-    #             next_birthday = datetime(today.year + 1, self.__value.month, self.__value.day).date()
-    #         days_left = (next_birthday - today).days
-    #         return days_left
-    #     return None
 
 
 class Email(Field):
@@ -238,8 +230,8 @@ class AddressBook(UserDict):
             if name.lower() == el.lower():
                 print(str(self.data[el]))
                 return 'Done'
-        
-        print( f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
+
+        print(f'There isn"t contact with  {bcolors.FAIL}{name}{bcolors.ENDC} name')
 
     def delete(self, name):
         for el in self.data:
@@ -248,7 +240,7 @@ class AddressBook(UserDict):
                 print(f"Contact {bcolors.OKBLUE}{name}{bcolors.ENDC} has been deleted successfully")
                 return 'done'
         print(f"Contact {bcolors.FAIL}{name}{bcolors.ENDC} not found")
-     
+
     def save_to_file(self, filename):
         with open(filename, 'wb') as file:
             pickle.dump(self, file)
@@ -296,4 +288,3 @@ class AddressBook(UserDict):
 
         if not flag:
             print('All contacts have no birthdays during this period')
-        

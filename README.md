@@ -1,4 +1,6 @@
-# project_group_9
+![Rock.py](./pyrock-logo.png?raw=true)
+
+# Rock.py
  Персональний помічник(ПП) запускається командою helper, або через файл main.py
 ПП містить книгу контактів та книгу нотаток
 

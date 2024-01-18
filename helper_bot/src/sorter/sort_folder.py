@@ -1,9 +1,9 @@
-import os
-import shutil
-import pathlib
-import tempfile
-import datetime
 import collections
+import datetime
+import os
+import pathlib
+import shutil
+import tempfile
 import zipfile
 
 RESULTS_FOLDERS = ("images", "video", "documents", "audio", "archives", "unknown")
@@ -18,7 +18,7 @@ def normalize(name):
         'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
         'є': 'je', 'і': 'i', 'ї': 'ji', 'ґ': 'g'
     }
-    
+
     result = ''.join(transliteration_dict.get(char, char) for char in name)
     result = ''.join([c if c.isalpha() or c.isdigit() or c == '.' else '_' for c in result])
     return result
@@ -38,9 +38,7 @@ def process_dir(result_path, element, extensions_info):
     return res
 
 
-
 def process_file(result_path, element, extensions_info):
-
     table = (
         ('JPEG', 'PNG', 'JPG', 'SVG'),
         ('AVI', 'MP4', 'MOV', 'MKV'),
@@ -68,7 +66,7 @@ def process_file(result_path, element, extensions_info):
     extensions_info["known" if known else "unknown"].add(suffix)
 
     if dest_folder == "archives":
-        result_path /= normalize(f"{element.stem}{element.suffix}") #!
+        result_path /= normalize(f"{element.stem}{element.suffix}")  # !
 
         if known:
             # Перевірка, чи файл є архівом
@@ -83,7 +81,7 @@ def process_file(result_path, element, extensions_info):
             else:
                 shutil.copy(str(element), str(result_path))
     else:
-        result_path /= f"{normalize(element.stem)}{element.suffix}" #!
+        result_path /= f"{normalize(element.stem)}{element.suffix}"  # !
 
         if known:
             shutil.copy(str(element), str(result_path))
@@ -92,9 +90,10 @@ def process_file(result_path, element, extensions_info):
             unknown_folder = result_path / "unknown"
             if not unknown_folder.is_dir():
                 unknown_folder.mkdir(parents=True)
-            shutil.copy(str(element), str(unknown_folder / f"unknown_{normalize(element.name)}")) #!
+            shutil.copy(str(element), str(unknown_folder / f"unknown_{normalize(element.name)}"))  # !
 
     return True
+
 
 # ...
 
@@ -146,6 +145,7 @@ def sorter(source_path, destination_path):
 
     post_processor(results_path, extensions_info)
 
+
 def sorter_interaction():
     source_path = input("Enter path to source folder: ")
     destination_path = input("Enter path to destination folder: ")
@@ -166,4 +166,3 @@ def sorter_interaction():
             print(e)
     else:
         print("Error: Both source and destination paths are required.")
-
