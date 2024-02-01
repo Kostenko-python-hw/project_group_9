@@ -51,7 +51,7 @@ address_book_commands_list = {
     'search contact by name': find_contact,
     'remove contact': remove_contact,
     'search contact': search,
-    'birthdays': birthdays,
+    'birthdays': birthdays
 }
 
 
